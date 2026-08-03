@@ -235,7 +235,7 @@ MAKEOPTS="-j$(nproc)"
 
 ### Repository settings
 OUR_REPO_ENABLED=true
-OUR_REPO_URL="https://our.omnomlinux.org"
+OUR_REPO_URL="https://frosr1o2.github.io/OmnomOS-Omnom-linux" -- our site can change sometimes
 
 ### Auto-cleanup
 AUTO_CLEANUP=true
