@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ "$1" = "--all" ]; then
+
+echo "Updating all packages"
+
+pacman -Syu --noconfirm
+
+else
+
+pacman -S "$1" --noconfirm
+
+fi
+

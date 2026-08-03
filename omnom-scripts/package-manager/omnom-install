@@ -1,0 +1,126 @@
+#!/usr/bin/env python3
+
+import argparse
+import subprocess
+import shutil
+
+
+def run(cmd):
+
+    return subprocess.run(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+
+
+def arch(pkg):
+
+    if shutil.which("pacman"):
+
+        return run(
+            [
+                "pacman",
+                "-Si",
+                pkg
+            ]
+        ).returncode == 0
+
+    return False
+
+
+
+def fedora(pkg):
+
+    if shutil.which("dnf"):
+
+        return run(
+            [
+                "dnf",
+                "info",
+                pkg
+            ]
+        ).returncode == 0
+
+    return False
+
+
+
+def gentoo(pkg):
+
+    if shutil.which("emerge"):
+
+        return run(
+            [
+                "emerge",
+                "--search",
+                pkg
+            ]
+        ).returncode == 0
+
+    return False
+
+
+
+def install(pkg):
+
+    print("[Omnom] Searching:",pkg)
+
+
+    if arch(pkg):
+
+        print("[Omnom] Arch backend")
+
+        subprocess.run(
+            [
+                "pacman",
+                "-S",
+                "--needed",
+                "--noconfirm",
+                pkg
+            ]
+        )
+
+
+    elif fedora(pkg):
+
+        print("[Omnom] Fedora backend")
+
+        subprocess.run(
+            [
+                "dnf",
+                "install",
+                "-y",
+                pkg
+            ]
+        )
+
+
+    elif gentoo(pkg):
+
+        print("[Omnom] Gentoo source backend")
+
+        subprocess.run(
+            [
+                "emerge",
+                pkg
+            ]
+        )
+
+
+    else:
+
+        print("[Omnom] Package not found")
+
+
+
+parser=argparse.ArgumentParser()
+
+parser.add_argument(
+"package"
+)
+
+args=parser.parse_args()
+
+
+install(args.package)

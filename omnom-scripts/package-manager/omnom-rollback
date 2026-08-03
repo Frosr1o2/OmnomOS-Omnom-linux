@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+
+echo "Usage: omnom-rollback <generation>"
+
+exit 1
+
+fi
+
+
+ln -sfn /omnom/profiles/$1 /omnom/profiles/current
+

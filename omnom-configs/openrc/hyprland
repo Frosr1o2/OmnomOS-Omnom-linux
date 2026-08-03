@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+
+name="Omnom Hyprland"
+
+command="/usr/bin/Hyprland"
+
+command_background=yes
+
+
+depend()
+{
+    need dbus
+    after seatd
+}
+
