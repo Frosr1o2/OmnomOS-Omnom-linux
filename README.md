@@ -131,60 +131,59 @@ File Structure
 └── builds/           # Temporary build files
 
 Configuration Options
-bash
 
 # /etc/omnom/omnom.conf
 
-# Default installation method (auto/dnf/pacman/emerge/our)
+### Default installation method (auto/dnf/pacman/emerge/our)
 DEFAULT_METHOD="auto"
 
-# Keep generations count
+### Keep generations count
 GENERATIONS_KEEP=10
 
-# Compiler flags for source compilation
+### Compiler flags for source compilation
 CFLAGS="-O2 -march=native -pipe"
 MAKEOPTS="-j$(nproc)"
 
-# Repository settings
+### Repository settings
 OUR_REPO_ENABLED=true
 OUR_REPO_URL="https://our.omnomlinux.org"
 
-# Auto-cleanup
+### Auto-cleanup
 AUTO_CLEANUP=true
 
 Example Workflows
 Installing Firefox
 
-# Try to install with auto-detection
+### Try to install with auto-detection
 omnom-install firefox
 
-# If you want to compile from source for optimization
+### If you want to compile from source for optimization
 omnom-install firefox --emerge
 
-# If you want to use a custom package from OUR
+### If you want to use a custom package from OUR
 omnom-install firefox --our
 
 Updating System
 
-# Full system update
+### Full system update
 omnom-upgrade --all
 
-# Check what updates are available
+### Check what updates are available
 omnom-upgrade --check
 
-# Something broke? Rollback!
+### Something broke? Rollback!
 omnom-upgrade --rollback
 
 Managing Packages
 
-# See what's installed
+### See what's installed
 omnom-install --list
 
-# Search for packages
+### Search for packages
 omnom-install --search browser
 
-# Remove a package
-omnom-install --remove firefox
+### Remove a package
+omnom-remove firefox
 
 Benefits Over Traditional Distros
 
