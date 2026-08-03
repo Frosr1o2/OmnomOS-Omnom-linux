@@ -306,4 +306,7 @@ omnom-remove firefox
 
     Binary cache for compiled packages
     
-# Omnom Linux - Because package management should be delicious!
+## Omnom Linux - Because package management should be delicious!
+
+# When you got iso file?
+I'm Trying work hard but i don't have so much time in this project so i'm thinking release date is 2027 year or 2026 ~9 November yes sorry but i'm do it alone
