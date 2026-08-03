@@ -1,4 +1,93 @@
-Omnom Linux
+# Omnom Linux Minimal Requirements
+## Minimum Hardware
+
+    CPU: x86_64 or ARM64, 1 GHz or faster
+
+    RAM: 512 MB minimum (2 GB recommended)
+
+    Storage: 16 GB minimum (32 GB recommended)
+
+    Graphics: GPU with Wayland support (for Hyprland/Niri and kitty)
+
+### Build Dependencies
+
+    Compiler: GCC 12+ or Clang 15+
+
+    Make: GNU Make 4.0+
+
+    Python: 3.10+ (for build scripts)
+
+    Git: 2.30+ (for source fetching)
+
+    CMake: 3.20+ (for some packages)
+
+    Meson: 1.0+ (for some packages)
+
+    Ninja: 1.10+ (for fast builds)
+
+### Runtime Dependencies
+
+    Kernel: Linux 6.0+ (with Wayland support)
+
+    libc: glibc 2.35+ or musl 1.2+
+
+    OpenRC: 0.45+ (init system)
+
+    Wayland: 1.22+ (display server)
+
+    Hyprland: 0.35+ or Niri 0.1+
+
+    Kitty: 0.30+ (terminal)
+
+    Fish: 3.6+ (shell)
+
+### Package Manager Backends (Optional)
+
+    DNF: 4.10+ (for RPM packages)
+
+    Pacman: 6.0+ (for Arch packages)
+
+    APT: 2.4+ (for Debian packages)
+
+    Portage: 3.0+ (for Gentoo emerge)
+
+    Yay/Paru: (for AUR support)
+
+### Network
+
+    Internet connection for package downloads
+
+    Minimum 1 Mbps recommended
+
+    Access to OUR repository (https://our.omnomlinux.org)
+
+### Build Space
+
+    /tmp: 2 GB minimum (for source compilation)
+
+    /var/lib/omnom: 1 GB minimum (for generations)
+
+    ~/.cache/omnom: 1 GB minimum (for build cache)
+
+### Supported Architectures
+
+    Primary: x86_64
+
+    Secondary: ARM64 (aarch64)
+
+    Experimental: RISC-V
+
+### Display Requirements
+
+    Resolution: 1024x768 minimum
+
+    Color Depth: 24-bit (true color)
+
+    GPU: Vulkan support recommended (for Hyprland)
+
+    DRM: Kernel Mode Setting (KMS) support
+
+### Description
 
 A minimalist, source-based Linux distribution built from scratch with modern sensibilities.
 Default Settings
@@ -7,7 +96,7 @@ Default Settings
 
     Init System: OpenRC - lightweight and fast
 
-    Desktop Environment: Hyprland - tiling Wayland compositor
+    Desktop Environment: Hyprland or Niri
 
     Default Shell: Fish - user-friendly with autosuggestions
 
@@ -185,7 +274,7 @@ omnom-install --search browser
 ### Remove a package
 omnom-remove firefox
 
-Benefits Over Traditional Distros
+## Benefits Over Traditional Distros
 
     Flexibility: Mix and match package managers
 
@@ -199,28 +288,22 @@ Benefits Over Traditional Distros
 
     Modern: Wayland + Hyprland for smooth desktop experience
 
-Future Roadmap
-
-    □
+### Future Roadmap
 
     GUI package manager frontend
-    □
+    
+    First beta test iso release
 
     Flatpak/AppImage integration
-    □
 
     Container-based package isolation
-    □
 
     Distributed package compilation
-    □
 
     Automated performance benchmarking
-    □
 
     Package dependency visualization
-    □
 
     Binary cache for compiled packages
-
-Omnom Linux - Because package management should be delicious!
+    
+# Omnom Linux - Because package management should be delicious!
