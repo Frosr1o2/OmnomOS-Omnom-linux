@@ -35,7 +35,6 @@ Installation Priority Order:
     Source compilation (Gentoo-style emerge)
 
 Usage Examples:
-bash
 
 omnom-install firefox                    # Auto-detect best method
 omnom-install firefox --emerge          # Force compile from source (Gentoo style)
@@ -53,7 +52,6 @@ omnom-upgrade - System Updater
 Intelligent system update tool with rollback capabilities:
 
 Usage Examples:
-bash
 
 omnom-upgrade --all                     # Update everything (system + packages)
 omnom-upgrade firefox                   # Update specific package only
@@ -111,7 +109,6 @@ Key Features
     Optimized for older hardware
 
 File Structure
-text
 
 /etc/omnom/
 ├── omnom.conf          # Main configuration
@@ -157,7 +154,6 @@ AUTO_CLEANUP=true
 
 Example Workflows
 Installing Firefox
-bash
 
 # Try to install with auto-detection
 omnom-install firefox
@@ -169,7 +165,6 @@ omnom-install firefox --emerge
 omnom-install firefox --our
 
 Updating System
-bash
 
 # Full system update
 omnom-upgrade --all
@@ -181,7 +176,6 @@ omnom-upgrade --check
 omnom-upgrade --rollback
 
 Managing Packages
-bash
 
 # See what's installed
 omnom-install --list
