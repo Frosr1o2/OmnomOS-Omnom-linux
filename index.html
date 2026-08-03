@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Omnom Linux</title>
     <style>
         * {
@@ -12,277 +12,319 @@
         }
 
         body {
-            background: #0b0b0b;
-            color: #c5c5c5;
-            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #d4d4d4;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
-            padding: 20px;
+            padding: 48px 24px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 820px;
             margin: 0 auto;
-            background: #111;
-            border: 1px solid #2a2a2a;
-            padding: 40px;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #2a2a2a;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
+            align-items: baseline;
             flex-wrap: wrap;
+            gap: 16px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #2a2a2a;
+            margin-bottom: 40px;
         }
 
-        .logo h1 {
-            color: #fff;
-            font-size: 28px;
-            font-weight: normal;
-            letter-spacing: 2px;
+        .logo {
+            font-size: 26px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            color: #e0e0e0;
         }
 
         .logo span {
-            color: #6a9fb5;
-        }
-
-        .nav a {
-            color: #aaa;
-            text-decoration: none;
-            margin-left: 25px;
-            font-size: 15px;
-        }
-
-        .nav a:hover {
-            color: #fff;
-            text-decoration: underline;
+            color: #00cc66;
+            font-weight: 400;
         }
 
         .hero {
-            background: #1a1a1a;
-            padding: 40px;
-            margin-bottom: 30px;
-            border-left: 4px solid #6a9fb5;
+            margin-bottom: 48px;
         }
 
-        .hero h2 {
-            color: #fff;
-            font-size: 24px;
-            font-weight: normal;
+        .hero h1 {
+            font-size: 34px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            color: #e8e8e8;
+            margin-bottom: 8px;
+        }
+
+        .hero h1 span {
+            color: #00cc66;
         }
 
         .hero p {
-            margin-top: 12px;
-            color: #aaa;
-            font-size: 16px;
+            font-size: 18px;
+            color: #999;
+            max-width: 620px;
+            margin-bottom: 12px;
         }
 
         .badge {
             display: inline-block;
-            background: #2a2a2a;
-            padding: 6px 14px;
             font-size: 14px;
-            color: #aaa;
-            margin-top: 12px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin: 30px 0;
-        }
-
-        .card {
-            background: #1a1a1a;
-            padding: 25px;
+            color: #00cc66;
+            background: #141414;
+            padding: 4px 14px;
+            border-radius: 20px;
             border: 1px solid #2a2a2a;
         }
 
-        .card h3 {
-            color: #fff;
-            font-size: 18px;
-            font-weight: normal;
-            border-bottom: 1px dashed #2a2a2a;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+        .section {
+            margin: 44px 0;
         }
 
-        .card ul {
+        .section h2 {
+            font-size: 20px;
+            font-weight: 500;
+            color: #e0e0e0;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #2a2a2a;
+            padding-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .section ul {
             list-style: none;
             padding: 0;
         }
 
-        .card li {
-            padding: 5px 0;
-            color: #b5b5b5;
+        .section ul li {
+            padding: 4px 0;
             font-size: 15px;
+            color: #bbb;
         }
 
-        .card li::before {
-            content: ">";
-            color: #6a9fb5;
-            margin-right: 10px;
+        .section ul li::before {
+            content: "— ";
+            color: #00cc66;
+            opacity: 0.7;
         }
 
-        .highlight-box {
-            background: #0f1a1f;
-            border: 1px solid #1a3a4a;
-            padding: 20px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            color: #b0b0b0;
-            overflow-x: auto;
+        .cmd-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 8px;
+        }
+
+        .cmd-box {
+            background: #111111;
+            border-radius: 6px;
+            padding: 18px 22px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .cmd-box .cmd-title {
+            font-weight: 500;
+            font-size: 15px;
+            color: #e0e0e0;
+            margin-bottom: 6px;
+        }
+
+        .cmd-box pre {
+            font-family: "SF Mono", "Menlo", "Monaco", monospace;
+            font-size: 13px;
+            line-height: 1.8;
             white-space: pre-wrap;
             word-break: break-word;
+            color: #c0c0c0;
+        }
+
+        .cmd-box pre .comment {
+            color: #666;
+        }
+
+        .cmd-box pre .cmd {
+            color: #00cc66;
+        }
+
+        .config-box {
+            background: #111111;
+            border-radius: 6px;
+            padding: 20px 24px;
+            border: 1px solid #2a2a2a;
+            font-family: "SF Mono", "Menlo", "Monaco", monospace;
+            font-size: 14px;
             line-height: 1.8;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #c0c0c0;
         }
 
-        .highlight-box .cmd {
-            color: #8bbbd1;
+        .config-box .key {
+            color: #00cc66;
         }
 
-        .flex-row {
+        .two-col {
             display: flex;
             flex-wrap: wrap;
-            gap: 25px;
-            margin: 30px 0;
+            gap: 40px;
+            margin-top: 8px;
         }
 
-        .flex-row .card {
+        .two-col .col {
             flex: 1;
-            min-width: 300px;
+            min-width: 200px;
+        }
+
+        .two-col .col h3 {
+            font-size: 17px;
+            font-weight: 500;
+            color: #e0e0e0;
+            margin-bottom: 8px;
+        }
+
+        .two-col .col ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .two-col .col ul li {
+            padding: 3px 0;
+            font-size: 15px;
+            color: #bbb;
+        }
+
+        .two-col .col ul li::before {
+            content: "— ";
+            color: #00cc66;
+            opacity: 0.7;
+        }
+
+        .iso-card {
+            background: #111111;
+            border-radius: 6px;
+            padding: 20px 24px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .iso-card h3 {
+            font-size: 17px;
+            font-weight: 500;
+            color: #e0e0e0;
+            margin-bottom: 4px;
+        }
+
+        .iso-card p {
+            font-size: 15px;
+            color: #aaa;
+        }
+
+        .iso-card .highlight {
+            color: #00cc66;
+        }
+
+        .iso-card .note {
+            font-size: 14px;
+            color: #666;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .benefit {
+            background: #111111;
+            border-radius: 6px;
+            padding: 16px 20px;
+            border: 1px solid #2a2a2a;
+            transition: border-color 0.2s;
+        }
+
+        .benefit:hover {
+            border-color: #00cc66;
+        }
+
+        .benefit .label {
+            font-weight: 500;
+            font-size: 15px;
+            color: #00cc66;
+        }
+
+        .benefit p {
+            font-size: 14px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .footer {
+            border-top: 1px solid #2a2a2a;
+            padding-top: 24px;
+            margin-top: 48px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer a {
+            color: #aaa;
+            text-decoration: none;
+            border-bottom: 1px solid #2a2a2a;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .footer a:hover {
+            color: #00cc66;
+            border-bottom-color: #00cc66;
         }
 
         hr {
             border: none;
             border-top: 1px solid #2a2a2a;
-            margin: 35px 0;
+            margin: 44px 0;
         }
 
-        .footer {
-            border-top: 1px solid #2a2a2a;
-            padding-top: 25px;
-            margin-top: 30px;
-            font-size: 14px;
-            color: #666;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .footer a {
-            color: #6a9fb5;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        .section-title {
-            color: #fff;
-            font-weight: normal;
-            margin: 35px 0 15px 0;
-            font-size: 22px;
-        }
-
-        .roadmap-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .roadmap-list li {
-            padding: 5px 0;
-            font-size: 15px;
-        }
-
-        .iso-box {
-            flex: 1;
-            min-width: 200px;
-            background: #1a1a1a;
-            padding: 25px;
-            border: 1px solid #2a2a2a;
-        }
-
-        .iso-box h3 {
-            color: #fff;
-            font-weight: normal;
-            font-size: 18px;
-        }
-
-        .iso-box p {
-            font-size: 15px;
-            color: #aaa;
-            margin-top: 10px;
-        }
-
-        .iso-box .highlight {
-            color: #fff;
-        }
-
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-        }
-
-        .benefit-item {
-            background: #1a1a1a;
-            padding: 20px;
-            border: 1px solid #2a2a2a;
-        }
-
-        .benefit-item .label {
-            color: #6a9fb5;
-            font-size: 16px;
-        }
-
-        .benefit-item p {
-            font-size: 14px;
-            color: #aaa;
-            margin-top: 8px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
+        @media (max-width: 700px) {
+            body {
+                padding: 32px 16px;
             }
-            .grid {
+            .cmd-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .header {
-                flex-direction: column;
-                align-items: start;
-            }
-            .nav a {
-                margin-left: 0;
-                margin-right: 20px;
-            }
-            .flex-row {
-                flex-direction: column;
-            }
-            .flex-row .card {
-                min-width: unset;
-            }
-            .hero {
-                padding: 25px;
-            }
-            .hero h2 {
-                font-size: 20px;
+                gap: 16px;
             }
             .benefits-grid {
                 grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .hero h1 {
+                font-size: 26px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .two-col {
+                gap: 24px;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 450px) {
             .benefits-grid {
                 grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 0;
             }
         }
     </style>
@@ -291,160 +333,131 @@
 
 <div class="container">
 
-    <div class="header">
-        <div class="logo">
-            <h1>Omnom <span>Linux</span></h1>
-        </div>
-        <div class="nav">
-            <a href="#">home</a>
-        </div>
-    </div>
+    <header class="header">
+        <div class="logo"><span>Omnom</span> Linux</div>
+    </header>
 
-    <div class="hero">
-        <h2>minimalist. source-based. modern.</h2>
+    <section class="hero">
+        <h1>minimalist. <span>source-based</span>. modern.</h1>
         <p>Linux distribution built from scratch with LFS, OpenRC, Hyprland and NixOS-style generations.</p>
-        <div class="badge">alpha stage – iso expected nov 2026</div>
+        <span class="badge">alpha stage — iso expected nov 2026</span>
+    </section>
+
+    <div class="section">
+        <h2>features</h2>
+        <ul>
+            <li>unified interface: omnom-install</li>
+            <li>auto-detects dnf / pacman / apt / emerge</li>
+            <li>fallback to source compilation</li>
+            <li>nixos-style generations with rollback</li>
+            <li>openrc – lightweight init</li>
+            <li>hyprland or niri (wayland)</li>
+            <li>low ram usage (512mb min)</li>
+        </ul>
     </div>
 
-    <div class="grid">
-        <div class="card">
-            <h3>package management</h3>
-            <ul>
-                <li>unified interface: omnom-install</li>
-                <li>auto-detects dnf / pacman / apt / emerge</li>
-                <li>fallback to source compilation</li>
-                <li>our – omnom user repository</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>system & safety</h3>
-            <ul>
-                <li>nixos-style generations</li>
-                <li>rollback to any previous state</li>
-                <li>openrc – lightweight init</li>
-                <li>low ram usage (512mb min)</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>desktop</h3>
-            <ul>
-                <li>hyprland or niri (wayland)</li>
-                <li>kitty terminal (gpu-accelerated)</li>
-                <li>fish shell with autosuggestions</li>
-                <li>vulkan support recommended</li>
-            </ul>
-        </div>
-        <div class="card">
-            <h3>build & deps</h3>
-            <ul>
-                <li>gcc 12+ / clang 15+</li>
-                <li>python 3.10+, git, cmake, meson</li>
-                <li>kernel 6.0+ with wayland</li>
-                <li>glibc 2.35+ or musl</li>
-            </ul>
-        </div>
-    </div>
-
-    <h2 class="section-title">commands</h2>
-    <div class="flex-row">
-        <div class="card">
-            <h3>omnom-install</h3>
-            <div class="highlight-box">
-                <span class="cmd">omnom-install firefox</span>          # auto-detect
-                <span class="cmd">omnom-install firefox --emerge</span> # compile from source
-                <span class="cmd">omnom-install firefox --our</span>    # from our repo
-                <span class="cmd">omnom-install --list</span>           # installed packages
-                <span class="cmd">omnom-install --search term</span>    # search all repos
-                <span class="cmd">omnom-install --remove pkg</span>     # remove package
+    <div class="section">
+        <h2>commands</h2>
+        <div class="cmd-grid">
+            <div class="cmd-box">
+                <div class="cmd-title">omnom-install</div>
+                <pre>
+<span class="cmd">omnom-install firefox</span>          <span class="comment"># auto-detect</span>
+<span class="cmd">omnom-install firefox --emerge</span> <span class="comment"># compile from source</span>
+<span class="cmd">omnom-install firefox --our</span>    <span class="comment"># from our repo</span>
+<span class="cmd">omnom-install --list</span>           <span class="comment"># installed packages</span>
+<span class="cmd">omnom-install --search term</span>    <span class="comment"># search all repos</span>
+<span class="cmd">omnom-install --remove pkg</span>     <span class="comment"># remove package</span>
+                </pre>
             </div>
-        </div>
-        <div class="card">
-            <h3>omnom-upgrade</h3>
-            <div class="highlight-box">
-                <span class="cmd">omnom-upgrade --all</span>            # full system update
-                <span class="cmd">omnom-upgrade firefox</span>          # update single pkg
-                <span class="cmd">omnom-upgrade --check</span>          # check updates
-                <span class="cmd">omnom-upgrade --rollback</span>       # rollback generation
-                <span class="cmd">omnom-upgrade --list-generations</span>
-                <span class="cmd">omnom-upgrade --switch gen</span>
+            <div class="cmd-box">
+                <div class="cmd-title">omnom-upgrade</div>
+                <pre>
+<span class="cmd">omnom-upgrade --all</span>            <span class="comment"># full system update</span>
+<span class="cmd">omnom-upgrade firefox</span>          <span class="comment"># update single pkg</span>
+<span class="cmd">omnom-upgrade --check</span>          <span class="comment"># check updates</span>
+<span class="cmd">omnom-upgrade --rollback</span>       <span class="comment"># rollback generation</span>
+<span class="cmd">omnom-upgrade --list-generations</span>
+<span class="cmd">omnom-upgrade --switch gen</span>
+                </pre>
             </div>
         </div>
     </div>
 
-    <h2 class="section-title">configuration</h2>
-    <div class="card">
-        <div class="highlight-box" style="background:#0d0d0d;">
-# /etc/omnom/omnom.conf
+    <div class="section">
+        <h2>configuration</h2>
+        <div class="config-box">
+<span class="key"># /etc/omnom/omnom.conf</span>
 
-DEFAULT_METHOD="auto"
-GENERATIONS_KEEP=10
-CFLAGS="-O2 -march=native -pipe"
-MAKEOPTS="-j$(nproc)"
-OUR_REPO_ENABLED=true
-OUR_REPO_URL="https://frosr1o2.github.io/OmnomOS-Omnom-linux"
-AUTO_CLEANUP=true
+<span class="key">DEFAULT_METHOD</span>="auto"
+<span class="key">GENERATIONS_KEEP</span>=10
+<span class="key">CFLAGS</span>="-O2 -march=native -pipe"
+<span class="key">MAKEOPTS</span>="-j$(nproc)"
+<span class="key">OUR_REPO_ENABLED</span>=true
+<span class="key">OUR_REPO_URL</span>="https://frosr1o2.github.io/OmnomOS-Omnom-linux"
+<span class="key">AUTO_CLEANUP</span>=true
         </div>
     </div>
 
-    <hr>
+    <hr />
 
-    <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:space-between;">
-        <div style="flex:2; min-width:250px;">
-            <h3 style="color:#fff; font-weight:normal; font-size:18px;">roadmap</h3>
-            <ul class="roadmap-list">
-                <li>> gui package manager frontend</li>
-                <li>> first beta test iso release</li>
-                <li>> flatpak / appimage integration</li>
-                <li>> container-based package isolation</li>
-                <li>> distributed package compilation</li>
-                <li>> binary cache for compiled packages</li>
+    <div class="two-col">
+        <div class="col">
+            <h3>roadmap</h3>
+            <ul>
+                <li>gui package manager frontend</li>
+                <li>first beta test iso release</li>
+                <li>flatpak / appimage integration</li>
+                <li>container-based package isolation</li>
+                <li>distributed package compilation</li>
+                <li>binary cache for compiled packages</li>
             </ul>
         </div>
-        <div class="iso-box">
-            <h3>iso release</h3>
-            <p>planned for <span class="highlight">november 2026</span> or <span class="highlight">2027</span>.</p>
-            <p style="color:#666; margin-top:15px;">single developer, working alone.</p>
+        <div class="col">
+            <div class="iso-card">
+                <h3>iso release</h3>
+                <p>planned for <span class="highlight">november 2026</span> or <span class="highlight">2027</span>.</p>
+                <p class="note">single developer, working alone.</p>
+            </div>
         </div>
     </div>
 
-    <hr>
+    <hr />
 
-    <h2 class="section-title">benefits</h2>
-    <div class="benefits-grid">
-        <div class="benefit-item">
-            <div class="label">flexibility</div>
-            <p>mix and match package managers</p>
-        </div>
-        <div class="benefit-item">
-            <div class="label">safety</div>
-            <p>automatic generations + rollback</p>
-        </div>
-        <div class="benefit-item">
-            <div class="label">control</div>
-            <p>binary or source compilation</p>
-        </div>
-        <div class="benefit-item">
-            <div class="label">simplicity</div>
-            <p>single command for all operations</p>
-        </div>
-        <div class="benefit-item">
-            <div class="label">efficiency</div>
-            <p>optimized for low ram usage</p>
-        </div>
-        <div class="benefit-item">
-            <div class="label">modern</div>
-            <p>wayland + hyprland desktop</p>
+    <div class="section">
+        <h2>benefits</h2>
+        <div class="benefits-grid">
+            <div class="benefit">
+                <div class="label">flexibility</div>
+                <p>mix and match package managers</p>
+            </div>
+            <div class="benefit">
+                <div class="label">safety</div>
+                <p>automatic generations + rollback</p>
+            </div>
+            <div class="benefit">
+                <div class="label">control</div>
+                <p>binary or source compilation</p>
+            </div>
+            <div class="benefit">
+                <div class="label">simplicity</div>
+                <p>single command for all operations</p>
+            </div>
+            <div class="benefit">
+                <div class="label">efficiency</div>
+                <p>optimized for low ram usage</p>
+            </div>
+            <div class="benefit">
+                <div class="label">modern</div>
+                <p>wayland + hyprland desktop</p>
+            </div>
         </div>
     </div>
 
-    <div class="footer">
-        <div>
-            <span>Omnom Linux – because package management should be delicious.</span>
-        </div>
-        <div>
-            <a href="https://github.com/Frosr1o2/OmnomOS-Omnom-linux">github</a>
-        </div>
-    </div>
+    <footer class="footer">
+        <span>Omnom Linux — because package management should be delicious.</span>
+        <a href="https://github.com/Frosr1o2/OmnomOS-Omnom-linux">github</a>
+    </footer>
 
 </div>
 
