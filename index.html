@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omnom Linux – official website</title>
+    <title>Omnom Linux</title>
     <style>
         * {
             margin: 0;
@@ -15,31 +15,31 @@
             background: #0b0b0b;
             color: #c5c5c5;
             font-family: 'Courier New', monospace;
-            line-height: 1.5;
+            line-height: 1.6;
             padding: 20px;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             background: #111;
             border: 1px solid #2a2a2a;
-            padding: 30px;
+            padding: 40px;
         }
 
-        /* header */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #2a2a2a;
-            padding-bottom: 15px;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
         .logo h1 {
             color: #fff;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: normal;
             letter-spacing: 2px;
         }
@@ -51,8 +51,8 @@
         .nav a {
             color: #aaa;
             text-decoration: none;
-            margin-left: 20px;
-            font-size: 14px;
+            margin-left: 25px;
+            font-size: 15px;
         }
 
         .nav a:hover {
@@ -60,55 +60,54 @@
             text-decoration: underline;
         }
 
-        /* hero */
         .hero {
             background: #1a1a1a;
-            padding: 30px;
-            margin: 25px 0;
+            padding: 40px;
+            margin-bottom: 30px;
             border-left: 4px solid #6a9fb5;
         }
 
         .hero h2 {
             color: #fff;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: normal;
         }
 
         .hero p {
-            margin-top: 10px;
+            margin-top: 12px;
             color: #aaa;
+            font-size: 16px;
         }
 
         .badge {
             display: inline-block;
             background: #2a2a2a;
-            padding: 5px 12px;
-            font-size: 13px;
+            padding: 6px 14px;
+            font-size: 14px;
             color: #aaa;
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
-        /* grid */
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 25px 0;
+            gap: 25px;
+            margin: 30px 0;
         }
 
         .card {
             background: #1a1a1a;
-            padding: 20px;
+            padding: 25px;
             border: 1px solid #2a2a2a;
         }
 
         .card h3 {
             color: #fff;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: normal;
             border-bottom: 1px dashed #2a2a2a;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .card ul {
@@ -117,28 +116,29 @@
         }
 
         .card li {
-            padding: 4px 0;
+            padding: 5px 0;
             color: #b5b5b5;
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .card li::before {
             content: ">";
             color: #6a9fb5;
-            margin-right: 8px;
+            margin-right: 10px;
         }
 
         .highlight-box {
             background: #0f1a1f;
             border: 1px solid #1a3a4a;
-            padding: 15px;
+            padding: 20px;
             margin: 15px 0;
             font-family: 'Courier New', monospace;
-            font-size: 13px;
+            font-size: 14px;
             color: #b0b0b0;
             overflow-x: auto;
             white-space: pre-wrap;
-            word-break: break-all;
+            word-break: break-word;
+            line-height: 1.8;
         }
 
         .highlight-box .cmd {
@@ -148,27 +148,26 @@
         .flex-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between;
-            margin: 25px 0;
+            gap: 25px;
+            margin: 30px 0;
         }
 
         .flex-row .card {
             flex: 1;
-            min-width: 200px;
+            min-width: 300px;
         }
 
         hr {
             border: none;
             border-top: 1px solid #2a2a2a;
-            margin: 30px 0;
+            margin: 35px 0;
         }
 
         .footer {
             border-top: 1px solid #2a2a2a;
-            padding-top: 20px;
-            margin-top: 20px;
-            font-size: 13px;
+            padding-top: 25px;
+            margin-top: 30px;
+            font-size: 14px;
             color: #666;
             display: flex;
             justify-content: space-between;
@@ -184,9 +183,77 @@
             text-decoration: underline;
         }
 
-        @media (max-width: 700px) {
+        .section-title {
+            color: #fff;
+            font-weight: normal;
+            margin: 35px 0 15px 0;
+            font-size: 22px;
+        }
+
+        .roadmap-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .roadmap-list li {
+            padding: 5px 0;
+            font-size: 15px;
+        }
+
+        .iso-box {
+            flex: 1;
+            min-width: 200px;
+            background: #1a1a1a;
+            padding: 25px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .iso-box h3 {
+            color: #fff;
+            font-weight: normal;
+            font-size: 18px;
+        }
+
+        .iso-box p {
+            font-size: 15px;
+            color: #aaa;
+            margin-top: 10px;
+        }
+
+        .iso-box .highlight {
+            color: #fff;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .benefit-item {
+            background: #1a1a1a;
+            padding: 20px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .benefit-item .label {
+            color: #6a9fb5;
+            font-size: 16px;
+        }
+
+        .benefit-item p {
+            font-size: 14px;
+            color: #aaa;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
             .grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
             .header {
                 flex-direction: column;
@@ -194,7 +261,28 @@
             }
             .nav a {
                 margin-left: 0;
-                margin-right: 15px;
+                margin-right: 20px;
+            }
+            .flex-row {
+                flex-direction: column;
+            }
+            .flex-row .card {
+                min-width: unset;
+            }
+            .hero {
+                padding: 25px;
+            }
+            .hero h2 {
+                font-size: 20px;
+            }
+            .benefits-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .benefits-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -203,7 +291,6 @@
 
 <div class="container">
 
-    <!-- HEADER -->
     <div class="header">
         <div class="logo">
             <h1>Omnom <span>Linux</span></h1>
@@ -213,14 +300,12 @@
         </div>
     </div>
 
-    <!-- HERO -->
     <div class="hero">
         <h2>minimalist. source-based. modern.</h2>
         <p>Linux distribution built from scratch with LFS, OpenRC, Hyprland and NixOS-style generations.</p>
         <div class="badge">alpha stage – iso expected nov 2026</div>
     </div>
 
-    <!-- GRID: features -->
     <div class="grid">
         <div class="card">
             <h3>package management</h3>
@@ -260,10 +345,9 @@
         </div>
     </div>
 
-    <!-- COMMANDS -->
-    <h2 style="color:#fff; font-weight:normal; margin: 30px 0 10px 0;">commands</h2>
+    <h2 class="section-title">commands</h2>
     <div class="flex-row">
-        <div class="card" style="flex:2;">
+        <div class="card">
             <h3>omnom-install</h3>
             <div class="highlight-box">
                 <span class="cmd">omnom-install firefox</span>          # auto-detect
@@ -274,7 +358,7 @@
                 <span class="cmd">omnom-install --remove pkg</span>     # remove package
             </div>
         </div>
-        <div class="card" style="flex:2;">
+        <div class="card">
             <h3>omnom-upgrade</h3>
             <div class="highlight-box">
                 <span class="cmd">omnom-upgrade --all</span>            # full system update
@@ -287,8 +371,7 @@
         </div>
     </div>
 
-    <!-- CONFIG -->
-    <h2 style="color:#fff; font-weight:normal; margin: 30px 0 10px 0;">configuration</h2>
+    <h2 class="section-title">configuration</h2>
     <div class="card">
         <div class="highlight-box" style="background:#0d0d0d;">
 # /etc/omnom/omnom.conf
@@ -303,60 +386,57 @@ AUTO_CLEANUP=true
         </div>
     </div>
 
-    <!-- ROADMAP + ISO -->
     <hr>
 
-    <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:space-between;">
-        <div style="flex:2; min-width:200px;">
-            <h3 style="color:#fff; font-weight:normal;">roadmap</h3>
-            <ul style="list-style:none; padding:0;">
-                <li style="padding:3px 0;">> gui package manager frontend</li>
-                <li style="padding:3px 0;">> first beta test iso release</li>
-                <li style="padding:3px 0;">> flatpak / appimage integration</li>
-                <li style="padding:3px 0;">> container-based package isolation</li>
-                <li style="padding:3px 0;">> distributed package compilation</li>
-                <li style="padding:3px 0;">> binary cache for compiled packages</li>
+    <div style="display:flex; flex-wrap:wrap; gap:30px; justify-content:space-between;">
+        <div style="flex:2; min-width:250px;">
+            <h3 style="color:#fff; font-weight:normal; font-size:18px;">roadmap</h3>
+            <ul class="roadmap-list">
+                <li>> gui package manager frontend</li>
+                <li>> first beta test iso release</li>
+                <li>> flatpak / appimage integration</li>
+                <li>> container-based package isolation</li>
+                <li>> distributed package compilation</li>
+                <li>> binary cache for compiled packages</li>
             </ul>
         </div>
-        <div style="flex:1; min-width:150px; background:#1a1a1a; padding:20px; border:1px solid #2a2a2a;">
-            <h3 style="color:#fff; font-weight:normal;">iso release</h3>
-            <p style="font-size:14px; color:#aaa;">planned for <strong style="color:#fff;">november 2026</strong> or <strong style="color:#fff;">2027</strong>.</p>
-            <p style="font-size:13px; color:#666; margin-top:10px;">single developer, working alone.</p>
+        <div class="iso-box">
+            <h3>iso release</h3>
+            <p>planned for <span class="highlight">november 2026</span> or <span class="highlight">2027</span>.</p>
+            <p style="color:#666; margin-top:15px;">single developer, working alone.</p>
         </div>
     </div>
 
-    <!-- BENEFITS -->
     <hr>
 
-    <h2 style="color:#fff; font-weight:normal; margin-bottom:15px;">benefits</h2>
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
-        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
-            <span style="color:#6a9fb5;">flexibility</span>
-            <p style="font-size:13px; color:#aaa; margin-top:5px;">mix and match package managers</p>
+    <h2 class="section-title">benefits</h2>
+    <div class="benefits-grid">
+        <div class="benefit-item">
+            <div class="label">flexibility</div>
+            <p>mix and match package managers</p>
         </div>
-        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
-            <span style="color:#6a9fb5;">safety</span>
-            <p style="font-size:13px; color:#aaa; margin-top:5px;">automatic generations + rollback</p>
+        <div class="benefit-item">
+            <div class="label">safety</div>
+            <p>automatic generations + rollback</p>
         </div>
-        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
-            <span style="color:#6a9fb5;">control</span>
-            <p style="font-size:13px; color:#aaa; margin-top:5px;">binary or source compilation</p>
+        <div class="benefit-item">
+            <div class="label">control</div>
+            <p>binary or source compilation</p>
         </div>
-        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
-            <span style="color:#6a9fb5;">simplicity</span>
-            <p style="font-size:13px; color:#aaa; margin-top:5px;">single command for all operations</p>
+        <div class="benefit-item">
+            <div class="label">simplicity</div>
+            <p>single command for all operations</p>
         </div>
-        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
-            <span style="color:#6a9fb5;">efficiency</span>
-            <p style="font-size:13px; color:#aaa; margin-top:5px;">optimized for low ram usage</p>
+        <div class="benefit-item">
+            <div class="label">efficiency</div>
+            <p>optimized for low ram usage</p>
         </div>
-        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
-            <span style="color:#6a9fb5;">modern</span>
-            <p style="font-size:13px; color:#aaa; margin-top:5px;">wayland + hyprland desktop</p>
+        <div class="benefit-item">
+            <div class="label">modern</div>
+            <p>wayland + hyprland desktop</p>
         </div>
     </div>
 
-    <!-- FOOTER -->
     <div class="footer">
         <div>
             <span>Omnom Linux – because package management should be delicious.</span>
