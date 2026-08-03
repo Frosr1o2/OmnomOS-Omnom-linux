@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K40AF Server Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #0b0e14;
+            color: #c8d0dc;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #111820, #1a2430);
+            padding: 18px 25px;
+            border-radius: 12px;
+            margin: 16px 0 20px 0;
+            border: 1px solid #1e2a36;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header h1 {
+            font-size: 1.6em;
+            font-weight: 600;
+            color: #e8edf5;
+            letter-spacing: -0.5px;
+        }
+
+        .header .subtitle {
+            color: #6a7a8a;
+            font-size: 0.85em;
+        }
+
+        .header .badge {
+            background: #1a2a3a;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            color: #8ab4f8;
+            font-family: monospace;
+            border: 1px solid #2a4a5a;
+        }
+
+        .header .badge.online {
+            border-color: #4caf84;
+            color: #4caf84;
+        }
+
+        .header .badge.offline {
+            border-color: #e06c6c;
+            color: #e06c6c;
+        }
+
+        .tabs {
+            display: flex;
+            background: #111820;
+            border-radius: 10px;
+            padding: 4px;
+            gap: 2px;
+            margin-bottom: 20px;
+            border: 1px solid #1e2a36;
+            overflow-x: auto;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            padding: 10px 24px;
+            background: none;
+            border: none;
+            color: #6a7a8a;
+            font-size: 0.9em;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: #c8d0dc;
+            background: #1a2430;
+        }
+
+        .tab-btn.active {
+            color: #e8edf5;
+            background: #1a2a3a;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: #141a24;
+            border-radius: 10px;
+            padding: 18px 22px;
+            border: 1px solid #1e2a36;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #5a6a7a;
+            margin-bottom: 12px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title .count {
+            font-size: 0.9em;
+            color: #4a5a6a;
+            font-weight: 400;
+        }
+
+        .grid-4col {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: 300;
+            color: #e8edf5;
+        }
+
+        .stat-value .unit {
+            font-size: 0.5em;
+            color: #5a6a7a;
+            margin-left: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.7em;
+            color: #5a6a7a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-online { color: #4caf84; }
+        .status-offline { color: #e06c6c; }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #e8edf5;
+            background: #1a2a3a;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-success { background: #2a6a4a; }
+        .btn-success:hover { background: #3a7a5a; }
+
+        .btn-danger { background: #6a2a2a; }
+        .btn-danger:hover { background: #8a3a3a; }
+
+        .btn-primary { background: #2a4a6a; }
+        .btn-primary:hover { background: #3a5a7a; }
+
+        .btn-download { background: #2a5a7a; }
+        .btn-download:hover { background: #3a6a8a; }
+
+        .btn-orange { background: #8a5a2a; }
+        .btn-orange:hover { background: #9a6a3a; }
+
+        .btn-sm { padding: 4px 14px; font-size: 0.75em; }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .server-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .server-type-item {
+            background: #0b0e14;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 2px solid #1a2632;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .server-type-item:hover {
+            border-color: #2a4a6a;
+        }
+
+        .server-type-item.selected {
+            border-color: #4a8aaa;
+            background: #0f1a2a;
+        }
+
+        .server-type-item .name {
+            font-weight: 600;
+            color: #c8d0dc;
+            font-size: 0.95em;
+        }
+
+        .server-type-item .desc {
+            font-size: 0.65em;
+            color: #5a6a7a;
+            margin-top: 2px;
+        }
+
+        .kernel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .kernel-card {
+            background: #0b0e14;
+            border-radius: 10px;
+            padding: 16px 18px;
+            border: 1px solid #1a2632;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .kernel-card:hover {
+            border-color: #2a4a6a;
+        }
+
+        .kernel-card .name {
+            font-weight: 600;
+            color: #e8edf5;
+            font-size: 1.05em;
+        }
+
+        .kernel-card .version {
+            color: #6a8aaa;
+            font-size: 0.8em;
+        }
+
+        .kernel-card .desc {
+            color: #8a9aaa;
+            font-size: 0.8em;
+            margin: 6px 0 10px 0;
+            line-height: 1.4;
+        }
+
+        .kernel-card .meta {
+            font-size: 0.7em;
+            color: #4a5a6a;
+            font-family: monospace;
+        }
+
+        .kernel-card .actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .kernel-card .badge-installed {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #2a6a4a;
+            color: #4caf84;
+            font-size: 0.6em;
+            padding: 2px 10px;
+            border-radius: 10px;
+            border: 1px solid #3a7a5a;
+        }
+
+        .log-container {
+            background: #070a10;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.75em;
+            max-height: 280px;
+            overflow-y: auto;
+            color: #7a8a9a;
+            line-height: 1.8;
+            border: 1px solid #0f1620;
+        }
+
+        .log-time { color: #3a5a6a; }
+        .log-info { color: #5a8aaa; }
+        .log-warn { color: #c8a84a; }
+        .log-error { color: #c86a4a; }
+        .log-success { color: #4caf84; }
+
+        .mods-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .mod-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 14px;
+            background: #0b0e14;
+            border-radius: 6px;
+            border: 1px solid #1a2632;
+        }
+
+        .mod-item .mod-name {
+            color: #c8d0dc;
+            font-weight: 500;
+        }
+
+        .mod-item .mod-size {
+            color: #4a5a6a;
+            font-size: 0.8em;
+        }
+
+        .status-bar {
+            background: #0b0e14;
+            padding: 8px 16px;
+            border-top: 1px solid #0f1620;
+            font-size: 0.8em;
+            color: #4a5a6a;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .upload-area {
+            border: 2px dashed #1a2632;
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #4a5a6a;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            margin-bottom: 12px;
+        }
+
+        .upload-area:hover {
+            border-color: #2a4a6a;
+        }
+
+        .upload-area .icon {
+            font-size: 2em;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-4col { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .grid-4col { grid-template-columns: 1fr 1fr; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .header h1 { font-size: 1.3em; }
+            .tabs { padding: 4px; }
+            .tab-btn { padding: 8px 14px; font-size: 0.8em; }
+            .app-container { padding: 0 10px; }
+            .card { padding: 14px 16px; }
+            .server-type-grid { grid-template-columns: 1fr 1fr; }
+            .kernel-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .grid-4col { grid-template-columns: 1fr; }
+            .server-type-grid { grid-template-columns: 1fr; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0e14; }
+        ::-webkit-scrollbar-thumb { background: #1a2a3a; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2a3a4a; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- HEADER -->
+    <header class="header">
+        <div>
+            <h1>K40AF Server Manager</h1>
+            <div class="subtitle">Minecraft server control panel</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <span class="badge">Arch Linux</span>
+            <span class="badge offline" id="statusBadge">Offline</span>
+        </div>
+    </header>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+        <button class="tab-btn" data-tab="kernels">Kernels</button>
+        <button class="tab-btn" data-tab="mods">Mods</button>
+        <button class="tab-btn" data-tab="downloads">Downloads</button>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- DASHBOARD -->
+        <div id="tab-dashboard" class="tab-content active">
+            <div class="grid-4col">
+                <div class="card">
+                    <div class="stat-label">Server Status</div>
+                    <div class="stat-value" id="statusText"><span class="status-offline">Offline</span></div>
+                </div>
+                <div class="card">
+                    <div class="stat-label">TPS</div>
+                    <div class="stat-value" id="tpsValue">0.0 <span class="unit">/ 20.0</span></div>
+                </div>
+                <div class="card">
+                    <div class="stat-label">Players</div>
+                    <div class="stat-value" id="playersValue">0</div>
+                </div>
+                <div class="card">
+                    <div class="stat-label">Memory Usage</div>
+                    <div class="stat-value" id="memoryValue">0 <span class="unit">MB</span></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Server Controls</div>
+                <div class="btn-group">
+                    <button class="btn btn-success" onclick="startServer()">Start Server</button>
+                    <button class="btn btn-danger" onclick="stopServer()">Stop Server</button>
+                    <button class="btn btn-primary" onclick="restartServer()">Restart</button>
+                    <button class="btn btn-orange" onclick="clearLogs()">Clear Logs</button>
+                </div>
+                <div style="margin-top:10px;font-size:0.85em;color:#4a5a6a;" id="actionStatus">Ready</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Server Type</div>
+                <div class="server-type-grid" id="serverTypeGrid">
+                    <div class="server-type-item selected" data-type="paper"><div class="name">Paper</div><div class="desc">Optimized</div></div>
+                    <div class="server-type-item" data-type="purpur"><div class="name">Purpur</div><div class="desc">Customizable</div></div>
+                    <div class="server-type-item" data-type="spigot"><div class="name">Spigot</div><div class="desc">Classic</div></div>
+                    <div class="server-type-item" data-type="vanilla"><div class="name">Vanilla</div><div class="desc">Official</div></div>
+                    <div class="server-type-item" data-type="fabric"><div class="name">Fabric</div><div class="desc">Lightweight</div></div>
+                    <div class="server-type-item" data-type="neoforge"><div class="name">Neoforge</div><div class="desc">Modern Forge</div></div>
+                    <div class="server-type-item" data-type="forge"><div class="name">Forge</div><div class="desc">Classic</div></div>
+                    <div class="server-type-item" data-type="folia"><div class="name">Folia</div><div class="desc">Multi-threaded</div></div>
+                    <div class="server-type-item" data-type="pufferfish"><div class="name">Pufferfish</div><div class="desc">Optimized</div></div>
+                </div>
+                <div style="margin-top:12px;">
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                        <label style="color:#5a6a7a;font-size:0.85em;">Version:</label>
+                        <select id="versionSelect" style="flex:1;min-width:120px;padding:8px 14px;border-radius:6px;border:1px solid #1a2632;background:#0b0e14;color:#c8d0dc;outline:none;">
+                            <option value="1.21.4">1.21.4</option>
+                            <option value="1.21.3">1.21.3</option>
+                            <option value="1.21.1" selected>1.21.1</option>
+                            <option value="1.21">1.21</option>
+                            <option value="1.20.6">1.20.6</option>
+                            <option value="1.20.4">1.20.4</option>
+                            <option value="1.20.2">1.20.2</option>
+                            <option value="1.20.1">1.20.1</option>
+                            <option value="1.19.4">1.19.4</option>
+                            <option value="1.19.3">1.19.3</option>
+                            <option value="1.19.2">1.19.2</option>
+                            <option value="1.18.2">1.18.2</option>
+                            <option value="1.18.1">1.18.1</option>
+                            <option value="1.17.1">1.17.1</option>
+                            <option value="1.16.5">1.16.5</option>
+                            <option value="1.15.2">1.15.2</option>
+                            <option value="1.14.4">1.14.4</option>
+                            <option value="1.13.2">1.13.2</option>
+                            <option value="1.12.2">1.12.2</option>
+                            <option value="1.11.2">1.11.2</option>
+                            <option value="1.10.2">1.10.2</option>
+                            <option value="1.9.4">1.9.4</option>
+                            <option value="1.8.9">1.8.9</option>
+                        </select>
+                        <button class="btn btn-download" onclick="downloadSelected()">Download Kernel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Server Logs</div>
+                <div class="log-container" id="logContainer">
+                    <div><span class="log-time">[--:--:--]</span> <span class="log-info">Manager initialized</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KERNELS -->
+        <div id="tab-kernels" class="tab-content">
+            <div class="card">
+                <div class="card-title">Installed Kernels <span class="count" id="kernelCount">0</span></div>
+                <div id="kernelsList" class="kernel-grid">
+                    <div style="color:#4a5a6a;padding:20px;text-align:center;grid-column:1/-1;">No kernels installed. Download from Dashboard.</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">All Available Kernels</div>
+                <div class="kernel-grid" id="allKernels">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- MODS -->
+        <div id="tab-mods" class="tab-content">
+            <div class="card">
+                <div class="card-title">Installed Mods <span class="count" id="installedModsCount">0</span></div>
+                <div id="installedModsList" class="mods-list">
+                    <div style="color:#4a5a6a;padding:10px;text-align:center;">No mods installed</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Upload Mod</div>
+                <div class="upload-area" id="uploadArea" onclick="document.getElementById('modFileInput').click()">
+                    <div class="icon">📁</div>
+                    <div>Click to select .jar file or drag & drop</div>
+                    <div style="font-size:0.8em;color:#3a4a5a;margin-top:4px;">Only .jar files accepted</div>
+                </div>
+                <input type="file" id="modFileInput" accept=".jar" style="display:none;" onchange="uploadMod()">
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                    <span style="font-size:0.8em;color:#4a5a6a;">Upload your own mods (.jar files)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOWNLOADS -->
+        <div id="tab-downloads" class="tab-content">
+            <div class="card">
+                <div class="card-title">Active Downloads <span class="count" id="downloadCount">0</span></div>
+                <div id="downloadList">
+                    <div style="color:#4a5a6a;padding:20px;text-align:center;">No active downloads</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Download History</div>
+                <div id="downloadHistory">
+                    <div style="color:#4a5a6a;padding:10px 0;text-align:center;font-size:0.85em;">No downloads yet</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- STATUS BAR -->
+    <div class="status-bar">
+        <span id="statusBarLeft">Ready</span>
+        <span id="statusBarRight">K40AF Server Manager &bull; 2026</span>
+    </div>
+
+</div>
+
+<script>
+    // ================================================================
+    //  DATA
+    // ================================================================
+
+    const ALL_KERNELS = [
+        {
+            type: 'paper',
+            name: 'Paper',
+            description: 'High-performance fork of Spigot with many optimizations. Industry standard.',
+            url: (v) => `https://api.papermc.io/v2/projects/paper/versions/${v}/builds/latest/downloads/paper-${v}-latest.jar`,
+            meta: 'Java 17+ • ~40 MB'
+        },
+        {
+            type: 'purpur',
+            name: 'Purpur',
+            description: 'Fork of Paper with more config options and unique features.',
+            url: (v) => `https://api.purpurmc.org/v2/purpur/${v}/latest/download`,
+            meta: 'Java 17+ • ~42 MB'
+        },
+        {
+            type: 'spigot',
+            name: 'Spigot',
+            description: 'Classic server software with full plugin support.',
+            url: (v) => `https://download.getbukkit.org/spigot/spigot-${v}.jar`,
+            meta: 'Java 17+ • ~45 MB'
+        },
+        {
+            type: 'vanilla',
+            name: 'Vanilla',
+            description: 'Official Mojang server. Pure vanilla experience.',
+            url: (v) => `https://piston-data.mojang.com/v1/objects/59353fb40c36d304f2035d51e7d6e6baa98dc05c/server.jar`,
+            meta: 'Java 17+ • ~42 MB'
+        },
+        {
+            type: 'fabric',
+            name: 'Fabric',
+            description: 'Lightweight mod loader. Great for performance and modern mods.',
+            url: (v) => `https://meta.fabricmc.net/v2/versions/loader/${v}/0.15.11/1.0.1/server/jar`,
+            meta: 'Java 17+ • ~2 MB'
+        },
+        {
+            type: 'neoforge',
+            name: 'Neoforge',
+            description: 'Modern Forge fork. The future of modded Minecraft.',
+            url: (v) => `https://maven.neoforged.net/releases/net/neoforged/neoforge/${v}/neoforge-${v}-installer.jar`,
+            meta: 'Java 17+ • ~25 MB'
+        },
+        {
+            type: 'forge',
+            name: 'Forge',
+            description: 'Classic mod loader. Thousands of mods available.',
+            url: (v) => `https://maven.minecraftforge.net/net/minecraftforge/forge/${v}/forge-${v}-installer.jar`,
+            meta: 'Java 17+ • ~30 MB'
+        },
+        {
+            type: 'folia',
+            name: 'Folia',
+            description: 'Multi-threaded Paper fork. Experimental but very fast.',
+            url: (v) => `https://api.papermc.io/v2/projects/folia/versions/${v}/builds/latest/downloads/folia-${v}-latest.jar`,
+            meta: 'Java 17+ • ~45 MB'
+        },
+        {
+            type: 'pufferfish',
+            name: 'Pufferfish',
+            description: 'Optimized Paper fork with advanced performance tweaks.',
+            url: (v) => `https://ci.pufferfish.host/job/Pufferfish-${v}/lastSuccessfulBuild/artifact/build/libs/pufferfish-${v}-latest.jar`,
+            meta: 'Java 17+ • ~42 MB'
+        }
+    ];
+
+    // ================================================================
+    //  STATE
+    // ================================================================
+
+    let serverRunning = false;
+    let tpsValue = 0;
+    let playerCount = 0;
+    let memoryUsage = 0;
+    let selectedType = 'paper';
+    let installedKernels = [];
+    let installedMods = [];
+    let downloadQueue = [];
+    let downloadHistory = [];
+
+    // ================================================================
+    //  TABS
+    // ================================================================
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+            if (this.dataset.tab === 'kernels') renderKernels();
+            if (this.dataset.tab === 'mods') renderMods();
+            if (this.dataset.tab === 'downloads') renderDownloads();
+        });
+    });
+
+    // ================================================================
+    //  SERVER TYPE SELECTION
+    // ================================================================
+
+    document.querySelectorAll('.server-type-item').forEach(el => {
+        el.addEventListener('click', function() {
+            document.querySelectorAll('.server-type-item').forEach(e => e.classList.remove('selected'));
+            this.classList.add('selected');
+            selectedType = this.dataset.type;
+            setStatus('Selected: ' + selectedType);
+        });
+    });
+
+    // ================================================================
+    //  SERVER CONTROLS
+    // ================================================================
+
+    function startServer() {
+        if (serverRunning) { setStatus('Already running'); return; }
+        setStatus('Starting server...');
+        addLog('info', 'Starting server process');
+        setTimeout(() => {
+            serverRunning = true;
+            tpsValue = 20.0;
+            playerCount = 0;
+            memoryUsage = 280;
+            updateUI();
+            setStatus('Server started');
+            addLog('success', 'Server started on port 25565');
+            setTimeout(() => addLog('info', 'World loaded'), 500);
+        }, 800);
+    }
+
+    function stopServer() {
+        if (!serverRunning) { setStatus('Not running'); return; }
+        setStatus('Stopping server...');
+        addLog('warn', 'Shutting down');
+        setTimeout(() => {
+            serverRunning = false;
+            tpsValue = 0;
+            playerCount = 0;
+            memoryUsage = 0;
+            updateUI();
+            setStatus('Server stopped');
+            addLog('warn', 'Server shutdown complete');
+        }, 600);
+    }
+
+    function restartServer() {
+        setStatus('Restarting...');
+        addLog('warn', 'Restarting');
+        if (serverRunning) {
+            stopServer();
+            setTimeout(startServer, 1200);
+        } else {
+            startServer();
+        }
+    }
+
+    function clearLogs() {
+        document.getElementById('logContainer').innerHTML = '';
+        addLog('info', 'Logs cleared');
+        setStatus('Logs cleared');
+    }
+
+    // ================================================================
+    //  KERNEL DOWNLOAD
+    // ================================================================
+
+    function getKernelUrl(type, version) {
+        const kernel = ALL_KERNELS.find(k => k.type === type);
+        if (!kernel) return null;
+        return kernel.url(version);
+    }
+
+    function downloadKernel(type) {
+        const version = document.getElementById('versionSelect').value;
+        const url = getKernelUrl(type, version);
+        if (!url) {
+            setStatus('No URL for ' + type + ' ' + version);
+            addLog('error', 'No download URL for ' + type + ' ' + version);
+            return;
+        }
+
+        const exists = installedKernels.some(k => k.type === type && k.version === version);
+        if (exists) {
+            setStatus(type + ' ' + version + ' already installed');
+            addLog('warn', 'Kernel already installed: ' + type + ' ' + version);
+            return;
+        }
+
+        const filename = type + '-' + version + '.jar';
+        setStatus('Downloading ' + filename + '...');
+        addLog('info', 'Downloading ' + filename);
+
+        const download = {
+            id: Date.now(),
+            name: filename,
+            type: 'kernel',
+            kernelType: type,
+            version: version,
+            url: url,
+            status: 'downloading',
+            progress: 0,
+            startTime: new Date().toLocaleTimeString()
+        };
+        downloadQueue.push(download);
+        renderDownloads();
+
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 15 + 5;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                download.status = 'complete';
+                download.progress = 100;
+                download.endTime = new Date().toLocaleTimeString();
+
+                installedKernels.push({ type: type, version: version, name: filename });
+                renderKernels();
+
+                downloadHistory.push({
+                    name: filename,
+                    type: 'Kernel',
+                    time: new Date().toLocaleTimeString(),
+                    status: 'Downloaded'
+                });
+
+                setStatus('Download complete: ' + filename);
+                addLog('success', 'Downloaded kernel: ' + filename);
+                renderDownloads();
+                updateUI();
+            } else {
+                download.progress = Math.round(progress);
+                renderDownloads();
+            }
+        }, 200);
+    }
+
+    function downloadSelected() {
+        downloadKernel(selectedType);
+    }
+
+    function quickStart(type) {
+        selectedType = type;
+        document.querySelectorAll('.server-type-item').forEach(el => {
+            el.classList.toggle('selected', el.dataset.type === type);
+        });
+        downloadKernel(type);
+        setTimeout(startServer, 2000);
+    }
+
+    function removeKernel(type, version) {
+        if (!confirm('Remove ' + type + ' ' + version + '?')) return;
+        installedKernels = installedKernels.filter(k => !(k.type === type && k.version === version));
+        renderKernels();
+        setStatus('Removed: ' + type + ' ' + version);
+        addLog('warn', 'Removed kernel: ' + type + ' ' + version);
+    }
+
+    function removeFromQueue(id) {
+        downloadQueue = downloadQueue.filter(d => d.id !== id);
+        renderDownloads();
+    }
+
+    // ================================================================
+    //  RENDER KERNELS
+    // ================================================================
+
+    function renderKernels() {
+        const container = document.getElementById('kernelsList');
+        const allContainer = document.getElementById('allKernels');
+        document.getElementById('kernelCount').textContent = installedKernels.length;
+
+        if (installedKernels.length === 0) {
+            container.innerHTML = '<div style="color:#4a5a6a;padding:20px;text-align:center;grid-column:1/-1;">No kernels installed. Download from Dashboard.</div>';
+        } else {
+            container.innerHTML = installedKernels.map(k => `
+                <div class="kernel-card">
+                    <span class="badge-installed">Installed</span>
+                    <div class="name">${k.type.charAt(0).toUpperCase() + k.type.slice(1)}</div>
+                    <div class="version">${k.version}</div>
+                    <div class="meta">${k.name}</div>
+                    <div class="actions">
+                        <button class="btn btn-success btn-sm" onclick="quickStart('${k.type}')">Start</button>
+                        <button class="btn btn-danger btn-sm" onclick="removeKernel('${k.type}','${k.version}')">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        allContainer.innerHTML = ALL_KERNELS.map(k => {
+            const installed = installedKernels.some(ik => ik.type === k.type);
+            return `
+                <div class="kernel-card">
+                    ${installed ? '<span class="badge-installed">Installed</span>' : ''}
+                    <div class="name">${k.name}</div>
+                    <div class="version">Multiple versions</div>
+                    <div class="desc">${k.description}</div>
+                    <div class="meta">${k.meta}</div>
+                    <div class="actions">
+                        ${!installed ? `<button class="btn btn-download btn-sm" onclick="downloadKernel('${k.type}')">Download</button>` : ''}
+                        <button class="btn btn-success btn-sm" onclick="quickStart('${k.type}')">Start</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ================================================================
+    //  MODS
+    // ================================================================
+
+    function renderMods() {
+        const container = document.getElementById('installedModsList');
+        const countEl = document.getElementById('installedModsCount');
+
+        countEl.textContent = installedMods.length;
+
+        if (installedMods.length === 0) {
+            container.innerHTML = '<div style="color:#4a5a6a;padding:10px;text-align:center;">No mods installed. Upload .jar files.</div>';
+            return;
+        }
+
+        container.innerHTML = installedMods.map((m, index) => `
+            <div class="mod-item">
+                <div class="mod-name">${m.name}</div>
+                <div>
+                    <span class="mod-size">${m.size || 'Unknown'}</span>
+                    <button class="btn btn-danger btn-sm" onclick="removeMod(${index})" style="margin-left:10px;">Remove</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function removeMod(index) {
+        const name = installedMods[index].name;
+        if (!confirm('Remove ' + name + ' from server?')) return;
+        installedMods.splice(index, 1);
+        renderMods();
+        setStatus('Removed: ' + name);
+        addLog('warn', 'Mod removed: ' + name);
+    }
+
+    function uploadMod() {
+        const input = document.getElementById('modFileInput');
+        if (input.files.length === 0) return;
+        const file = input.files[0];
+
+        if (!file.name.endsWith('.jar')) {
+            setStatus('Only .jar files allowed');
+            addLog('error', 'Invalid file type: ' + file.name);
+            return;
+        }
+
+        const name = file.name;
+        const size = (file.size / 1024).toFixed(1) + ' KB';
+
+        // Проверка на дубли
+        if (installedMods.some(m => m.name === name)) {
+            setStatus('Already installed: ' + name);
+            return;
+        }
+
+        installedMods.push({ name: name, size: size });
+        renderMods();
+        setStatus('Uploaded: ' + name);
+        addLog('success', 'Mod uploaded: ' + name + ' (' + size + ')');
+        input.value = '';
+    }
+
+    // ================================================================
+    //  RENDER DOWNLOADS
+    // ================================================================
+
+    function renderDownloads() {
+        const container = document.getElementById('downloadList');
+        const countEl = document.getElementById('downloadCount');
+        const historyEl = document.getElementById('downloadHistory');
+
+        countEl.textContent = downloadQueue.length;
+
+        if (downloadQueue.length === 0) {
+            container.innerHTML = '<div style="color:#4a5a6a;padding:20px;text-align:center;">No active downloads</div>';
+        } else {
+            container.innerHTML = downloadQueue.map(d => `
+                <div style="background:#0b0e14;padding:12px 16px;border-radius:8px;border:1px solid #1a2632;margin-bottom:8px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                        <div>
+                            <span style="font-weight:500;color:#c8d0dc;">${d.name}</span>
+                            <span style="font-size:0.75em;color:#4a5a6a;margin-left:10px;">${d.startTime}</span>
+                            <span style="font-size:0.7em;color:#5a6a7a;margin-left:8px;">${d.type}</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <span style="font-size:0.8em;color:#6a8aaa;">${d.status === 'downloading' ? d.progress + '%' : 'Complete'}</span>
+                            ${d.status === 'downloading' ? `
+                                <div style="width:120px;height:4px;background:#1a2a3a;border-radius:2px;overflow:hidden;">
+                                    <div style="width:${d.progress}%;height:100%;background:#2a6a4a;transition:width 0.3s;"></div>
+                                </div>
+                            ` : `
+                                <span style="color:#4caf84;font-size:0.8em;">Done</span>
+                            `}
+                            ${d.status === 'complete' ? '' : `<button class="btn btn-danger btn-sm" onclick="removeFromQueue(${d.id})">Cancel</button>`}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        if (downloadHistory.length === 0) {
+            historyEl.innerHTML = '<div style="color:#4a5a6a;padding:10px 0;text-align:center;font-size:0.85em;">No downloads yet</div>';
+        } else {
+            historyEl.innerHTML = downloadHistory.slice().reverse().map(h => `
+                <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #0f1620;font-size:0.85em;">
+                    <span style="color:#c8d0dc;">${h.name}</span>
+                    <span style="color:#4a5a6a;">${h.time}</span>
+                    <span style="color:#4a5a6a;">${h.type}</span>
+                    <span style="color:#4caf84;">${h.status}</span>
+                </div>
+            `).join('');
+        }
+    }
+
+    // ================================================================
+    //  UI UPDATE
+    // ================================================================
+
+    function updateUI() {
+        const statusEl = document.getElementById('statusText');
+        const badgeEl = document.getElementById('statusBadge');
+
+        if (serverRunning) {
+            statusEl.innerHTML = '<span class="status-online">Online</span>';
+            badgeEl.textContent = 'Online';
+            badgeEl.className = 'badge online';
+        } else {
+            statusEl.innerHTML = '<span class="status-offline">Offline</span>';
+            badgeEl.textContent = 'Offline';
+            badgeEl.className = 'badge offline';
+        }
+
+        document.getElementById('tpsValue').innerHTML = tpsValue.toFixed(1) + ' <span class="unit">/ 20.0</span>';
+        document.getElementById('playersValue').textContent = playerCount;
+        document.getElementById('memoryValue').innerHTML = memoryUsage + ' <span class="unit">MB</span>';
+    }
+
+    function setStatus(msg) {
+        document.getElementById('actionStatus').textContent = msg;
+        document.getElementById('statusBarLeft').textContent = msg;
+    }
+
+    // ================================================================
+    //  LOGS
+    // ================================================================
+
+    function addLog(level, message) {
+        const container = document.getElementById('logContainer');
+        const time = new Date().toTimeString().slice(0, 8);
+        const levelClass = 'log-' + level;
+        const div = document.createElement('div');
+        div.innerHTML = `<span class="log-time">[${time}]</span> <span class="${levelClass}">${message}</span>`;
+        container.appendChild(div);
+        if (container.children.length > 100) container.removeChild(container.firstChild);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    // ================================================================
+    //  SIMULATION
+    // ================================================================
+
+    function simulateServer() {
+        if (serverRunning) {
+            tpsValue = Math.max(14, Math.min(20, tpsValue + (Math.random() - 0.5) * 1.2));
+            if (Math.random() > 0.7) {
+                playerCount = Math.max(0, playerCount + (Math.random() > 0.5 ? 1 : -1));
+            }
+            memoryUsage = Math.max(220, Math.min(500, memoryUsage + (Math.random() - 0.5) * 15));
+            updateUI();
+            if (Math.random() > 0.93) {
+                const msgs = ['Player joined', 'Player left', 'Saving chunks', 'World saved', 'Keep alive'];
+                addLog('info', msgs[Math.floor(Math.random() * msgs.length)]);
+            }
+        }
+    }
+
+    // ================================================================
+    //  INIT
+    // ================================================================
+
+    function init() {
+        setStatus('Ready');
+        renderKernels();
+        renderMods();
+        updateUI();
+        addLog('info', 'Server manager initialized');
+        addLog('info', 'Ready to manage Minecraft server');
+        setTimeout(() => {
+            addLog('info', installedKernels.length + ' kernels installed');
+            addLog('info', installedMods.length + ' mods installed');
+        }, 500);
+        setInterval(simulateServer, 2000);
+    }
+
+    init();
+</script>
+</body>
+</html>
