@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omnom Linux</title>
+    <title>Omnom Linux – official website</title>
     <style>
         * {
             margin: 0;
@@ -12,115 +12,189 @@
         }
 
         body {
-            background-color: #0a0a0a;
-            color: #c0c0c0;
+            background: #0b0b0b;
+            color: #c5c5c5;
             font-family: 'Courier New', monospace;
-            line-height: 1.6;
+            line-height: 1.5;
             padding: 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
+            background: #111;
             border: 1px solid #2a2a2a;
             padding: 30px;
-            background-color: #111111;
         }
 
-        h1 {
-            color: #ffffff;
-            font-size: 28px;
-            font-weight: normal;
-            letter-spacing: 2px;
+        /* header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border-bottom: 1px solid #2a2a2a;
             padding-bottom: 15px;
-            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
-        h2 {
-            color: #e0e0e0;
-            font-size: 20px;
+        .logo h1 {
+            color: #fff;
+            font-size: 26px;
             font-weight: normal;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-bottom: 1px dashed #2a2a2a;
-            padding-bottom: 10px;
+            letter-spacing: 2px;
         }
 
-        h3 {
-            color: #d0d0d0;
-            font-size: 16px;
-            font-weight: normal;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            margin-bottom: 15px;
-        }
-
-        a {
+        .logo span {
             color: #6a9fb5;
-            text-decoration: none;
         }
 
-        a:hover {
-            color: #8bbbd1;
+        .nav a {
+            color: #aaa;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        .nav a:hover {
+            color: #fff;
             text-decoration: underline;
         }
 
-        ul, ol {
-            margin-left: 25px;
-            margin-bottom: 15px;
+        /* hero */
+        .hero {
+            background: #1a1a1a;
+            padding: 30px;
+            margin: 25px 0;
+            border-left: 4px solid #6a9fb5;
         }
 
-        li {
-            margin-bottom: 5px;
+        .hero h2 {
+            color: #fff;
+            font-size: 22px;
+            font-weight: normal;
         }
 
-        .code-block {
-            background-color: #1a1a1a;
-            border-left: 3px solid #2a4a5a;
+        .hero p {
+            margin-top: 10px;
+            color: #aaa;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #2a2a2a;
+            padding: 5px 12px;
+            font-size: 13px;
+            color: #aaa;
+            margin-top: 10px;
+        }
+
+        /* grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: #1a1a1a;
+            padding: 20px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .card h3 {
+            color: #fff;
+            font-size: 16px;
+            font-weight: normal;
+            border-bottom: 1px dashed #2a2a2a;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card li {
+            padding: 4px 0;
+            color: #b5b5b5;
+            font-size: 14px;
+        }
+
+        .card li::before {
+            content: ">";
+            color: #6a9fb5;
+            margin-right: 8px;
+        }
+
+        .highlight-box {
+            background: #0f1a1f;
+            border: 1px solid #1a3a4a;
             padding: 15px;
-            font-family: 'Courier New', monospace;
-            color: #b0b0b0;
             margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #b0b0b0;
             overflow-x: auto;
             white-space: pre-wrap;
             word-break: break-all;
         }
 
-        .note {
-            background-color: #141414;
-            border: 1px solid #2a2a2a;
-            padding: 15px;
-            margin: 15px 0;
+        .highlight-box .cmd {
+            color: #8bbbd1;
         }
 
-        .separator {
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            margin: 25px 0;
+        }
+
+        .flex-row .card {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        hr {
             border: none;
             border-top: 1px solid #2a2a2a;
             margin: 30px 0;
         }
 
         .footer {
-            margin-top: 40px;
-            padding-top: 20px;
             border-top: 1px solid #2a2a2a;
-            font-size: 14px;
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 13px;
             color: #666;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
         }
 
-        .highlight {
-            color: #b5b5b5;
+        .footer a {
+            color: #6a9fb5;
+            text-decoration: none;
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            .grid {
+                grid-template-columns: 1fr;
             }
-            h1 {
-                font-size: 22px;
+            .header {
+                flex-direction: column;
+                align-items: start;
+            }
+            .nav a {
+                margin-left: 0;
+                margin-right: 15px;
             }
         }
     </style>
@@ -129,189 +203,170 @@
 
 <div class="container">
 
-    <h1>OMNOM LINUX</h1>
-    <p style="color: #888; margin-bottom: 20px;">Minimalist source-based Linux distribution</p>
-
-    <hr class="separator">
-
-    <h2>Requirements</h2>
-
-    <h3>Minimum Hardware</h3>
-    <ul>
-        <li>CPU: x86_64 or ARM64, 1 GHz or faster</li>
-        <li>RAM: 512 MB minimum (2 GB recommended)</li>
-        <li>Storage: 16 GB minimum (32 GB recommended)</li>
-        <li>Graphics: GPU with Wayland support for Hyprland/Niri and kitty/alacritty</li>
-    </ul>
-
-    <h3>Build Dependencies</h3>
-    <ul>
-        <li>Compiler: GCC 12+ or Clang 15+</li>
-        <li>Make: GNU Make 4.0+</li>
-        <li>Python: 3.10+ (for build scripts)</li>
-        <li>Git: 2.30+ (for source fetching)</li>
-        <li>CMake: 3.20+ (for some packages)</li>
-        <li>Meson: 1.0+ (for some packages)</li>
-        <li>Ninja: 1.10+ (for fast builds)</li>
-    </ul>
-
-    <h3>Runtime Dependencies</h3>
-    <ul>
-        <li>Kernel: Linux 6.0+ (with Wayland support)</li>
-        <li>libc: glibc 2.35+ or musl 1.2+</li>
-        <li>OpenRC: 0.45+ (init system)</li>
-        <li>Wayland: 1.22+ (display server)</li>
-        <li>Hyprland: 0.35+ or Niri 0.1+</li>
-        <li>Kitty: 0.30+ (terminal)</li>
-        <li>Fish: 3.6+ (shell)</li>
-    </ul>
-
-    <h2>Package Manager Backends (Optional)</h2>
-    <ul>
-        <li>DNF: 4.10+ (for RPM packages)</li>
-        <li>Pacman: 6.0+ (for Arch packages)</li>
-        <li>APT: 2.4+ (for Debian packages)</li>
-        <li>Portage: 3.0+ (for Gentoo emerge)</li>
-        <li>Yay/Paru: (for AUR support)</li>
-    </ul>
-
-    <h2>Commands</h2>
-
-    <h3>omnom-install</h3>
-    <p>Intelligent package installer with auto-detection and fallback options.</p>
-    <p>Installation priority: DNF → Pacman → AUR → OUR → Source compilation.</p>
-
-    <div class="code-block">
-        omnom-install firefox                     # Auto-detect best method
-        omnom-install firefox --emerge            # Force compile from source
-        omnom-install firefox --our               # Install from Omnom User Repository
-        omnom-install firefox --dnf               # Force use DNF
-        omnom-install firefox --pacman            # Force use Pacman
-        omnom-install firefox --aur               # Force install from AUR
-        omnom-install --list                      # List all installed packages
-        omnom-install --search &lt;term&gt;            # Search across all repositories
-        omnom-install --remove &lt;package&gt;         # Remove installed package
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">
+            <h1>Omnom <span>Linux</span></h1>
+        </div>
+        <div class="nav">
+            <a href="#">home</a>
+            <a href="#">repo</a>
+            <a href="#">blog</a>
+            <a href="#">about</a>
+        </div>
     </div>
 
-    <h3>omnom-upgrade</h3>
-    <p>System updater with rollback capabilities.</p>
-
-    <div class="code-block">
-        omnom-upgrade --all                       # Update everything
-        omnom-upgrade firefox                     # Update specific package
-        omnom-upgrade our                         # Update Omnom User Repository
-        omnom-upgrade --check                     # Check for updates
-        omnom-upgrade --rollback                  # Rollback to previous generation
-        omnom-upgrade --list-generations          # List all system generations
-        omnom-upgrade --switch &lt;generation&gt;      # Switch to specific generation
+    <!-- HERO -->
+    <div class="hero">
+        <h2>minimalist. source-based. modern.</h2>
+        <p>Linux distribution built from scratch with LFS, OpenRC, Hyprland and NixOS-style generations.</p>
+        <div class="badge">alpha stage – iso expected nov 2026</div>
     </div>
 
-    <h2>Features</h2>
-
-    <h3>NixOS-Style Generations</h3>
-    <ul>
-        <li>Every install/upgrade creates a new system generation</li>
-        <li>Easy rollback to any previous state</li>
-        <li>Keep up to 10 generations by default (configurable)</li>
-    </ul>
-
-    <h3>Multi-Backend Support</h3>
-    <ul>
-        <li>Seamless work with DNF, Pacman, APT, Emerge</li>
-        <li>Unified interface across different package managers</li>
-        <li>Automatic fallback if primary method fails</li>
-    </ul>
-
-    <h3>Omnom User Repository (OUR)</h3>
-    <ul>
-        <li>Community-driven package repository</li>
-        <li>Simple .pkg format for package definitions</li>
-        <li>Local package creation support</li>
-    </ul>
-
-    <h3>Source Compilation</h3>
-    <ul>
-        <li>Gentoo-style emerge support</li>
-        <li>Automatic dependency resolution</li>
-        <li>Optimized for specific hardware</li>
-        <li>Custom compiler flags support</li>
-    </ul>
-
-    <h2>File Structure</h2>
-
-    <div class="code-block">
-        /etc/omnom/
-        ├── omnom.conf          # Main configuration
-        ├── repos.conf          # Repository configuration
-        └── flags.conf          # Default compiler flags
-
-        /var/lib/omnom/
-        ├── generations/        # All system generations
-        │   ├── gen-20240315_120000/
-        │   ├── gen-20240315_150000/
-        │   └── current -> gen-20240315_150000/
-        ├── packages.list       # Currently installed packages
-        └── history.log         # Installation/upgrade history
-
-        ~/.config/omnom/
-        ├── our-repo/           # Local OUR packages
-        └── omnomrc             # User configuration
-
-        ~/.cache/omnom/
-        └── builds/             # Temporary build files
+    <!-- GRID: features -->
+    <div class="grid">
+        <div class="card">
+            <h3>package management</h3>
+            <ul>
+                <li>unified interface: omnom-install</li>
+                <li>auto-detects dnf / pacman / apt / emerge</li>
+                <li>fallback to source compilation</li>
+                <li>our – omnom user repository</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>system & safety</h3>
+            <ul>
+                <li>nixos-style generations</li>
+                <li>rollback to any previous state</li>
+                <li>openrc – lightweight init</li>
+                <li>low ram usage (512mb min)</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>desktop</h3>
+            <ul>
+                <li>hyprland or niri (wayland)</li>
+                <li>kitty terminal (gpu-accelerated)</li>
+                <li>fish shell with autosuggestions</li>
+                <li>vulkan support recommended</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>build & deps</h3>
+            <ul>
+                <li>gcc 12+ / clang 15+</li>
+                <li>python 3.10+, git, cmake, meson</li>
+                <li>kernel 6.0+ with wayland</li>
+                <li>glibc 2.35+ or musl</li>
+            </ul>
+        </div>
     </div>
 
-    <h2>Configuration Example</h2>
-
-    <div class="code-block">
-        # /etc/omnom/omnom.conf
-
-        DEFAULT_METHOD="auto"
-        GENERATIONS_KEEP=10
-        CFLAGS="-O2 -march=native -pipe"
-        MAKEOPTS="-j$(nproc)"
-        OUR_REPO_ENABLED=true
-        OUR_REPO_URL="https://frosr1o2.github.io/OmnomOS-Omnom-linux"
-        AUTO_CLEANUP=true
+    <!-- COMMANDS -->
+    <h2 style="color:#fff; font-weight:normal; margin: 30px 0 10px 0;">commands</h2>
+    <div class="flex-row">
+        <div class="card" style="flex:2;">
+            <h3>omnom-install</h3>
+            <div class="highlight-box">
+                <span class="cmd">omnom-install firefox</span>          # auto-detect
+                <span class="cmd">omnom-install firefox --emerge</span> # compile from source
+                <span class="cmd">omnom-install firefox --our</span>    # from our repo
+                <span class="cmd">omnom-install --list</span>           # installed packages
+                <span class="cmd">omnom-install --search term</span>    # search all repos
+                <span class="cmd">omnom-install --remove pkg</span>     # remove package
+            </div>
+        </div>
+        <div class="card" style="flex:2;">
+            <h3>omnom-upgrade</h3>
+            <div class="highlight-box">
+                <span class="cmd">omnom-upgrade --all</span>            # full system update
+                <span class="cmd">omnom-upgrade firefox</span>          # update single pkg
+                <span class="cmd">omnom-upgrade --check</span>          # check updates
+                <span class="cmd">omnom-upgrade --rollback</span>       # rollback generation
+                <span class="cmd">omnom-upgrade --list-generations</span>
+                <span class="cmd">omnom-upgrade --switch gen</span>
+            </div>
+        </div>
     </div>
 
-    <h2>Benefits</h2>
-    <ul>
-        <li>Flexibility: Mix and match package managers</li>
-        <li>Safety: Automatic generations with easy rollback</li>
-        <li>Control: Choose between binary or source compilation</li>
-        <li>Simplicity: Single command for all package operations</li>
-        <li>Efficiency: Optimized for low RAM usage</li>
-        <li>Modern: Wayland + Hyprland for smooth desktop experience</li>
-    </ul>
+    <!-- CONFIG -->
+    <h2 style="color:#fff; font-weight:normal; margin: 30px 0 10px 0;">configuration</h2>
+    <div class="card">
+        <div class="highlight-box" style="background:#0d0d0d;">
+# /etc/omnom/omnom.conf
 
-    <hr class="separator">
-
-    <h2>Roadmap</h2>
-    <ul>
-        <li>GUI package manager frontend</li>
-        <li>First beta test ISO release</li>
-        <li>Flatpak/AppImage integration</li>
-        <li>Container-based package isolation</li>
-        <li>Distributed package compilation</li>
-        <li>Automated performance benchmarking</li>
-        <li>Package dependency visualization</li>
-        <li>Binary cache for compiled packages</li>
-    </ul>
-
-    <hr class="separator">
-
-    <div class="note">
-        <p><strong>ISO Release Date</strong></p>
-        <p>I'm trying to work hard but I don't have much time for this project. Release date is planned for 2027 or November 2026. I am doing it alone.</p>
+DEFAULT_METHOD="auto"
+GENERATIONS_KEEP=10
+CFLAGS="-O2 -march=native -pipe"
+MAKEOPTS="-j$(nproc)"
+OUR_REPO_ENABLED=true
+OUR_REPO_URL="https://frosr1o2.github.io/OmnomOS-Omnom-linux"
+AUTO_CLEANUP=true
+        </div>
     </div>
 
+    <!-- ROADMAP + ISO -->
+    <hr>
+
+    <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:space-between;">
+        <div style="flex:2; min-width:200px;">
+            <h3 style="color:#fff; font-weight:normal;">roadmap</h3>
+            <ul style="list-style:none; padding:0;">
+                <li style="padding:3px 0;">> gui package manager frontend</li>
+                <li style="padding:3px 0;">> first beta test iso release</li>
+                <li style="padding:3px 0;">> flatpak / appimage integration</li>
+                <li style="padding:3px 0;">> container-based package isolation</li>
+                <li style="padding:3px 0;">> distributed package compilation</li>
+                <li style="padding:3px 0;">> binary cache for compiled packages</li>
+            </ul>
+        </div>
+        <div style="flex:1; min-width:150px; background:#1a1a1a; padding:20px; border:1px solid #2a2a2a;">
+            <h3 style="color:#fff; font-weight:normal;">iso release</h3>
+            <p style="font-size:14px; color:#aaa;">planned for <strong style="color:#fff;">november 2026</strong> or <strong style="color:#fff;">2027</strong>.</p>
+            <p style="font-size:13px; color:#666; margin-top:10px;">single developer, working alone.</p>
+        </div>
+    </div>
+
+    <!-- BENEFITS -->
+    <hr>
+
+    <h2 style="color:#fff; font-weight:normal; margin-bottom:15px;">benefits</h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px;">
+        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
+            <span style="color:#6a9fb5;">flexibility</span>
+            <p style="font-size:13px; color:#aaa; margin-top:5px;">mix and match package managers</p>
+        </div>
+        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
+            <span style="color:#6a9fb5;">safety</span>
+            <p style="font-size:13px; color:#aaa; margin-top:5px;">automatic generations + rollback</p>
+        </div>
+        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
+            <span style="color:#6a9fb5;">control</span>
+            <p style="font-size:13px; color:#aaa; margin-top:5px;">binary or source compilation</p>
+        </div>
+        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
+            <span style="color:#6a9fb5;">simplicity</span>
+            <p style="font-size:13px; color:#aaa; margin-top:5px;">single command for all operations</p>
+        </div>
+        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
+            <span style="color:#6a9fb5;">efficiency</span>
+            <p style="font-size:13px; color:#aaa; margin-top:5px;">optimized for low ram usage</p>
+        </div>
+        <div style="background:#1a1a1a; padding:15px; border:1px solid #2a2a2a;">
+            <span style="color:#6a9fb5;">modern</span>
+            <p style="font-size:13px; color:#aaa; margin-top:5px;">wayland + hyprland desktop</p>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
     <div class="footer">
-        <p>Omnom Linux - Because package management should be delicious.</p>
-        <p style="margin-top: 5px;">
-            <a href="https://github.com/Frosr1o2/OmnomOS-Omnom-linux">GitHub</a> |
-            <a href="https://our.omnomlinux.org">our.omnomlinux.org</a>
-        </p>
+        <div>
+            <span>Omnom Linux – because package management should be delicious.</span>
+        </div>
+        <div>
+            <a href="https://github.com/Frosr1o2/OmnomOS-Omnom-linux">github</a>
+        </div>
     </div>
 
 </div>
