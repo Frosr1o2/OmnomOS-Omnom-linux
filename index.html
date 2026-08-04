@@ -116,13 +116,17 @@
             font-size: 22px;
             letter-spacing: -.3px;
         }
+        /* Изменённый кружок – теперь использует вашу иконку */
         .logo-circle {
-            width: 20px;
-            height: 20px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background-image: url('favicon.png');
+            background-size: cover;
+            background-position: center;
             box-shadow: 0 0 28px var(--primary-glow);
             animation: pulseLogo 3.5s ease-in-out infinite;
+            flex-shrink: 0;
         }
         @keyframes pulseLogo {
             0%, 100% {
