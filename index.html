@@ -275,6 +275,14 @@
             width: 440px;
             height: 440px;
         }
+        .planet-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: planetFloat 4s ease-in-out infinite;
+        }
         .planet {
             width: 100%;
             height: 100%;
@@ -282,11 +290,8 @@
             background-image: url('favicon.png');
             background-size: cover;
             background-position: center;
-            animation: planetSpin 22s linear infinite, planetFloat 4s ease-in-out infinite;
+            animation: planetSpin 22s linear infinite;
             position: relative;
-        }
-        .planet::after {
-            display: none;
         }
         @keyframes planetSpin {
             0% {
@@ -808,7 +813,9 @@
             </div>
         </div>
         <div class="hero-image">
-            <div class="planet"></div>
+            <div class="planet-wrapper">
+                <div class="planet"></div>
+            </div>
         </div>
     </section>
 
@@ -1204,13 +1211,6 @@ omnom-remove firefox
                 card.addEventListener('mouseleave', () => {
                     card.style.background = 'rgba(255,255,255,.05)';
                 });
-            });
-            const planet = document.querySelector('.planet');
-            document.addEventListener('mousemove', (e) => {
-                const x = (e.clientX / window.innerWidth - 0.5) * 8;
-                const y = (e.clientY / window.innerHeight - 0.5) * 8;
-                planet.style.transform =
-                    `rotate(${parseInt(planet.style.transform?.match(/rotate\(([^)]+)\)/)?.[1] || 0)}deg) translate(${x}px, ${y}px)`;
             });
         })();
     </script>
