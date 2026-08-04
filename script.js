@@ -1,7 +1,3 @@
-// =============================
-// Omnom Linux Website
-// script.js
-// =============================
 
 // Fade in sections
 const observer = new IntersectionObserver((entries) => {
