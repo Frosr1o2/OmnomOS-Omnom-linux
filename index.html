@@ -1,396 +1,1214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Omnom Linux</title>
-
-<meta name="description"
-content="Hybrid Linux Distribution built from Linux From Scratch">
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Omnom Linux</title>
+    <meta name="description" content="Hybrid Linux Distribution built from Linux From Scratch" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg: #060b09;
+            --bg2: #0a1410;
+            --card: rgba(255, 255, 255, .05);
+            --border: rgba(255, 255, 255, .07);
+            --text: #ebf5f0;
+            --text2: #a0c0b4;
+            --primary: #00b894;
+            --primary-dim: rgba(0, 184, 148, .15);
+            --primary-glow: rgba(0, 184, 148, .40);
+            --secondary: #00d2d3;
+            --shadow: 0 0 60px rgba(0, 184, 148, .30);
+            --radius: 24px;
+            --transition: .40s cubic-bezier(.22, 1, .36, 1);
+            --header-height: 80px;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            padding-top: var(--header-height);
+        }
+        ::selection {
+            background: var(--primary);
+            color: #0a1410;
+        }
+        #background {
+            position: fixed;
+            inset: 0;
+            z-index: -10;
+            background:
+                radial-gradient(ellipse at 20% 15%, rgba(0, 184, 148, .20), transparent 45%),
+                radial-gradient(ellipse at 85% 85%, rgba(0, 210, 211, .12), transparent 40%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 184, 148, .04), transparent 70%),
+                linear-gradient(160deg, #040a07, #0a1812);
+        }
+        #background .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(0, 184, 148, .35);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+            filter: blur(1px);
+        }
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: .3;
+            }
+            50% {
+                opacity: .8;
+            }
+            100% {
+                transform: translateY(-110vh) scale(0);
+                opacity: 0;
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 12px;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px;
+            backdrop-filter: blur(24px) saturate(1.4);
+            background: rgba(6, 11, 9, .55);
+            border-bottom: 1px solid rgba(0, 184, 148, .10);
+            z-index: 1000;
+            transition: background .4s;
+        }
+        header.scrolled {
+            background: rgba(6, 11, 9, .85);
+            border-bottom-color: rgba(0, 184, 148, .18);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 800;
+            font-size: 22px;
+            letter-spacing: -.3px;
+        }
+        .logo-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 0 28px var(--primary-glow);
+            animation: pulseLogo 3.5s ease-in-out infinite;
+        }
+        @keyframes pulseLogo {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 28px var(--primary-glow);
+            }
+            50% {
+                transform: scale(1.18);
+                box-shadow: 0 0 50px var(--primary-glow);
+            }
+        }
+        nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        nav a {
+            color: var(--text2);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+            position: relative;
+            letter-spacing: .2px;
+            cursor: pointer;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+            border-radius: 4px;
+        }
+        nav a:hover {
+            color: #fff;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 26px;
+            height: 2.5px;
+            background: var(--text);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        .menu-toggle.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-toggle.open span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        .hero {
+            min-height: calc(100vh - var(--header-height));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 80px;
+            gap: 40px;
+            scroll-margin-top: var(--header-height);
+        }
+        .hero-content {
+            max-width: 680px;
+            flex-shrink: 0;
+        }
+        .hero h1 {
+            font-size: 76px;
+            font-weight: 900;
+            line-height: 1.04;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 20px;
+            color: var(--text2);
+            line-height: 1.8;
+            margin-bottom: 44px;
+            max-width: 560px;
+        }
+        .buttons {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 38px;
+            border-radius: 60px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            transition: var(--transition);
+            text-decoration: none;
+            pointer-events: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #00856a);
+            color: #fff;
+            box-shadow: 0 4px 30px rgba(0, 184, 148, .30);
+            pointer-events: auto;
+            cursor: default;
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 50px rgba(0, 184, 148, .45);
+        }
+        .btn-icon {
+            font-size: 20px;
+        }
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            width: 440px;
+            height: 440px;
+        }
+        .planet {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle at 30% 25%, #55efc4, #00856a 60%, #004d3d);
+            box-shadow:
+                0 0 80px rgba(0, 184, 148, .35),
+                0 0 200px rgba(0, 184, 148, .12),
+                inset 0 -40px 80px rgba(0, 0, 0, .4);
+            animation: planetSpin 22s linear infinite, planetFloat 4s ease-in-out infinite;
+            position: relative;
+        }
+        .planet::after {
+            content: '';
+            position: absolute;
+            inset: 6%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 30%, rgba(255, 255, 255, .08), transparent 60%);
+        }
+        @keyframes planetSpin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes planetFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-14px);
+            }
+        }
+        section {
+            padding: 100px 80px;
+            scroll-margin-top: var(--header-height);
+        }
+        .section-label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        section h2 {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+        .section-desc {
+            color: var(--text2);
+            font-size: 18px;
+            max-width: 600px;
+            margin-bottom: 50px;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            padding: 36px 32px 40px;
+            background: var(--card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(0, 184, 148, .20), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 184, 148, .25);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .4);
+        }
+        .card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .card p {
+            color: var(--text2);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        #architecture {
+            background: rgba(0, 184, 148, .02);
+            border-top: 1px solid rgba(0, 184, 148, .06);
+            border-bottom: 1px solid rgba(0, 184, 148, .06);
+        }
+        .arch-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 14px 24px;
+            padding: 20px 0;
+        }
+        .arch-item {
+            padding: 14px 30px;
+            border-radius: 40px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .06);
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text2);
+            transition: var(--transition);
+        }
+        .arch-item:hover {
+            border-color: var(--primary);
+            color: #fff;
+            background: var(--primary-dim);
+        }
+        .arch-item.core {
+            background: linear-gradient(135deg, var(--primary), #00856a);
+            color: #fff;
+            border: none;
+            box-shadow: var(--shadow);
+            font-weight: 700;
+            padding: 16px 44px;
+        }
+        .arch-arrow {
+            font-size: 28px;
+            color: var(--primary);
+            opacity: .5;
+        }
+        .terminal-wrap {
+            background: #050a08;
+            border-radius: var(--radius);
+            border: 1px solid rgba(0, 184, 148, .12);
+            padding: 8px 0 0 0;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+        }
+        .terminal-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, .04);
+        }
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff5f56;
+        }
+        .terminal-dot:nth-child(2) {
+            background: #ffbd2e;
+        }
+        .terminal-dot:nth-child(3) {
+            background: #27c93f;
+        }
+        .terminal-title {
+            margin-left: 10px;
+            font-size: 13px;
+            color: var(--text2);
+            font-weight: 500;
+        }
+        .terminal-body {
+            padding: 28px 32px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #c8e6d9;
+        }
+        .terminal-body .prompt {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .terminal-body .cmd {
+            color: #e4f5ee;
+        }
+        .terminal-body .output {
+            color: var(--text2);
+            font-size: 15px;
+            padding-left: 20px;
+            display: block;
+            opacity: .7;
+        }
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+        }
+        .timeline-item {
+            padding: 22px 26px;
+            background: rgba(255, 255, 255, .03);
+            border-radius: 16px;
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 500;
+        }
+        .timeline-item:hover {
+            background: var(--primary-dim);
+            border-left-color: var(--secondary);
+            transform: translateX(6px);
+        }
+        .timeline-item .status {
+            font-size: 18px;
+            opacity: .6;
+        }
+        .timeline-item.done .status {
+            opacity: 1;
+            color: var(--primary);
+        }
+        .timeline-item.active .status {
+            opacity: 1;
+            color: var(--secondary);
+            animation: blinkStatus 1.2s infinite;
+        }
+        @keyframes blinkStatus {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .2;
+            }
+        }
+        #requirements .terminal-body {
+            font-size: 15px;
+        }
+        #requirements .terminal-body h3 {
+            color: #55efc4;
+            font-size: 1.4em;
+            font-weight: 700;
+            margin: 1.8em 0 0.8em;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        #requirements .terminal-body h4 {
+            color: #fdcb6e;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 1.4em 0 0.6em;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        #requirements .terminal-body ul, #requirements .terminal-body ol {
+            padding-left: 1.8em;
+            margin-bottom: 1em;
+            color: #c8e6d9;
+        }
+        #requirements .terminal-body li {
+            margin-bottom: 0.3em;
+        }
+        #requirements .terminal-body strong {
+            color: #e4f5ee;
+        }
+        #requirements .terminal-body code {
+            background: rgba(255, 255, 255, .06);
+            padding: 0.1em 0.6em;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #b8e6d6;
+        }
+        #requirements .terminal-body pre {
+            background: rgba(0, 0, 0, .4);
+            padding: 1.2em 1.5em;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 184, 148, .10);
+            overflow-x: auto;
+            margin: 0.8em 0 1.5em;
+            font-size: 0.9em;
+            line-height: 1.7;
+            color: #c8e6d9;
+        }
+        #requirements .terminal-body pre .comment {
+            color: #5a7a6e;
+        }
+        #requirements .terminal-body pre .key {
+            color: #55efc4;
+        }
+        #requirements .terminal-body pre .value {
+            color: #fdcb6e;
+        }
+        #requirements .terminal-body .note {
+            background: rgba(0, 184, 148, .08);
+            border-left: 4px solid var(--primary);
+            padding: 1.2em 1.8em;
+            border-radius: 12px;
+            margin: 1.8em 0;
+            color: #c8e6d9;
+        }
+        #requirements .terminal-body .note strong {
+            color: #55efc4;
+        }
+        footer {
+            padding: 60px 80px 50px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, .04);
+            color: var(--text2);
+        }
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        footer .footer-links a {
+            color: var(--text2);
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        footer .footer-links a:hover {
+            color: var(--primary);
+        }
+        footer p {
+            font-size: 14px;
+            opacity: .6;
+        }
+        #topButton {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), #00856a);
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 30px rgba(0, 184, 148, .30);
+            opacity: 0;
+            transform: translateY(20px) scale(.9);
+            transition: var(--transition);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #topButton.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        #topButton:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 50px rgba(0, 184, 148, .45);
+        }
+        .hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (max-width: 1100px) {
+            .hero {
+                padding: 0 40px;
+                flex-direction: column;
+                text-align: center;
+                padding-top: 40px;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .hero p {
+                max-width: 100%;
+            }
+            .buttons {
+                justify-content: center;
+            }
+            .hero-image {
+                width: 300px;
+                height: 300px;
+            }
+            section {
+                padding: 70px 40px;
+            }
+            header {
+                padding: 0 30px;
+            }
+            .hero h1 {
+                font-size: 52px;
+            }
+        }
+        @media (max-width: 760px) {
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(6, 11, 9, .96);
+                backdrop-filter: blur(30px);
+                flex-direction: column;
+                justify-content: center;
+                gap: 28px;
+                transform: translateX(100%);
+                transition: var(--transition);
+                padding: 40px;
+                z-index: 998;
+            }
+            nav.open {
+                transform: translateX(0);
+            }
+            nav a {
+                font-size: 22px;
+            }
+            .menu-toggle {
+                display: flex;
+                z-index: 999;
+            }
+            .hero {
+                padding: 0 24px;
+                padding-top: 20px;
+            }
+            .hero h1 {
+                font-size: 38px;
+            }
+            .hero p {
+                font-size: 17px;
+            }
+            .hero-image {
+                width: 220px;
+                height: 220px;
+            }
+            section {
+                padding: 50px 24px;
+            }
+            section h2 {
+                font-size: 34px;
+            }
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            .terminal-body {
+                font-size: 14px;
+                padding: 20px;
+                line-height: 2;
+            }
+            .timeline {
+                grid-template-columns: 1fr 1fr;
+            }
+            footer {
+                padding: 40px 24px;
+            }
+            #topButton {
+                bottom: 24px;
+                right: 24px;
+                width: 46px;
+                height: 46px;
+                font-size: 20px;
+            }
+            .arch-flow {
+                gap: 10px 16px;
+            }
+            .arch-item {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+            .arch-item.core {
+                padding: 12px 28px;
+            }
+            .arch-arrow {
+                font-size: 20px;
+            }
+        }
+        @media (max-width: 460px) {
+            .hero h1 {
+                font-size: 30px;
+            }
+            .btn {
+                padding: 14px 28px;
+                font-size: 14px;
+                width: 100%;
+                justify-content: center;
+            }
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .timeline {
+                grid-template-columns: 1fr;
+            }
+            .hero-image {
+                width: 170px;
+                height: 170px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-
-<div id="background"></div>
-
-<header>
-
-<div class="logo">
-
-<div class="logo-circle"></div>
-
-<span>Omnom Linux</span>
-
-</div>
-
-<nav>
-
-<a href="#">Home</a>
-
-<a href="#features">Features</a>
-
-<a href="#roadmap">Roadmap</a>
-
-<a href="#">Download</a>
-
-<a href="#">Docs</a>
-
-<a href="https://github.com/Frosr1o2/OmnomOS-Omnom-linux">GitHub</a>
-
-</nav>
-
-</header>
-
-<section class="hero">
-
-<div class="hero-content">
-
-<h1>
-
-Build Linux.
-
-Not Another Distribution.
-
-</h1>
-
-<p>
-
-Omnom Linux is a modern Linux distribution built completely from Linux From Scratch.
-
-Fast.
-
-Minimal.
-
-Hybrid.
-
-Rollback-ready.
-
-Powered by OpenRC.
-
-</p>
-
-<div class="buttons">
-
-<button class="primary">
-
-Download
-
-</button>
-
-<button class="secondary">
-
-Documentation
-
-</button>
-
-</div>
-
-</div>
-
-<div class="hero-image">
-
-<div class="planet"></div>
-
-</div>
-
-</section>
-
-<section id="features">
-
-<h2>
-
-Features
-
-</h2>
-
-<div class="cards">
-
-<div class="card">
-
-<h3>
-
-⚡ Fast
-
-</h3>
-
-<p>
-
-Optimized from kernel to desktop.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>
-
-📦 Hybrid Package Manager
-
-</h3>
-
-<p>
-
-Arch.
-
-Gentoo.
-
-Fedora.
-
-One interface.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>
-
-🔄 Rollback
-
-</h3>
-
-<p>
-
-Generations inspired by NixOS.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>
-
-🪶 Lightweight
-
-</h3>
-
-<p>
-
-OpenRC + Hyprland + fish.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>
-
-🖥 Wayland
-
-</h3>
-
-<p>
-
-Modern desktop experience.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<h3>
-
-💻 Developers
-
-</h3>
-
-<p>
-
-Built by developers for developers.
-
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-<section id="architecture">
-
-<h2>
-
-Architecture
-
-</h2>
-
-<div class="architecture">
-
-<div>
-
-Arch
-
-</div>
-
-<div>
-
-Gentoo
-
-</div>
-
-<div>
-
-Fedora
-
-</div>
-
-<div class="center">
-
-↓
-
-</div>
-
-<div class="main">
-
-Omnom Package Layer
-
-</div>
-
-<div class="center">
-
-↓
-
-</div>
-
-<div>
-
-Linux From Scratch
-
-</div>
-
-</div>
-
-</section>
-
-<section id="commands">
-
-<h2>
-
-Commands
-
-</h2>
-
-<div class="terminal">
-
-<span>$</span> omnom-install firefox
-
-<br>
-
-<span>$</span> omnom-upgrade --all
-
-<br>
-
-<span>$</span> omnom-remove discord
-
-<br>
-
-<span>$</span> omnom-rollback 12
-
-</div>
-
-</section>
-
-<section id="roadmap">
-
-<h2>
-
-Roadmap
-
-</h2>
-
-<div class="timeline">
-
-<div>
-
-✔ Website
-
-</div>
-
-<div>
-
-✔ Bootstrap
-
-</div>
-
-<div>
-
-✔ LFS
-
-</div>
-
-<div>
-
-◉ Toolchain
-
-</div>
-
-<div>
-
-○ Kernel
-
-</div>
-
-<div>
-
-○ OpenRC
-
-</div>
-
-<div>
-
-○ Installer
-
-</div>
-
-<div>
-
-○ ISO
-
-</div>
-
-<div>
-
-○ Version 1.0
-
-</div>
-
-</div>
-
-</section>
-
-<footer>
-
-<p>
-
-Omnom Linux © 2026
-
-</p>
-
-<p>
-
-Built with ❤️ from Linux From Scratch
-
-</p>
-
-</footer>
-
-<script src="script.js"></script>
-
+    <div id="background"></div>
+
+    <header id="header">
+        <div class="logo">
+            <div class="logo-circle"></div>
+            <span>Omnom Linux</span>
+        </div>
+        <nav id="nav">
+            <a href="#home" data-nav>Home</a>
+            <a href="#features" data-nav>Features</a>
+            <a href="#roadmap" data-nav>Roadmap</a>
+            <a href="https://github.com/Frosr1o2/OmnomOS-Omnom-linux" target="_blank">GitHub</a>
+        </nav>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Build Linux.<br /><span class="highlight">Not Another Distro.</span></h1>
+            <p>Omnom Linux is a modern, hybrid Linux distribution built from Linux From Scratch. Fast, minimal, rollback-ready, and powered by OpenRC.</p>
+            <div class="buttons">
+                <span class="btn btn-primary">Release 09 november</span>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="planet"></div>
+        </div>
+    </section>
+
+    <section id="features" class="hidden">
+        <span class="section-label">✦ capabilities</span>
+        <h2>Why Omnom?</h2>
+        <p class="section-desc">Built from scratch with a developer-first mindset — every layer is optimized for performance and control.</p>
+        <div class="cards">
+            <div class="card"><h3>Blazing Fast</h3><p>Optimized from kernel to desktop with minimal overhead and lean defaults.</p></div>
+            <div class="card"><h3>Hybrid Package Manager</h3><p>One interface to rule them all — Arch, Gentoo, and Fedora packages.</p></div>
+            <div class="card"><h3>Rollback Ready</h3><p>Generation-based rollbacks inspired by NixOS. Safe upgrades, always.</p></div>
+            <div class="card"><h3>Lightweight</h3><p>OpenRC + Hyprland + fish — a modern, minimal stack that stays out of your way.</p></div>
+            <div class="card"><h3>Wayland Native</h3><p>Full Wayland experience with Hyprland compositor. Smooth, modern, and secure.</p></div>
+            <div class="card"><h3>For Developers</h3><p>Built by developers, for developers. Toolchains, containers, and CI from day one.</p></div>
+        </div>
+    </section>
+
+    <section id="architecture" class="hidden">
+        <span class="section-label">✦ stack</span>
+        <h2>Architecture</h2>
+        <p class="section-desc">A hybrid foundation that combines the best of multiple worlds.</p>
+        <div class="arch-flow">
+            <span class="arch-item">Arch</span>
+            <span class="arch-arrow">⟶</span>
+            <span class="arch-item">Gentoo</span>
+            <span class="arch-arrow">⟶</span>
+            <span class="arch-item">Fedora</span>
+            <span class="arch-arrow">⟶</span>
+            <span class="arch-item core">Omnom Package Layer</span>
+            <span class="arch-arrow">⟶</span>
+            <span class="arch-item">Linux From Scratch</span>
+        </div>
+    </section>
+
+    <section id="commands" class="hidden">
+        <span class="section-label">✦ terminal</span>
+        <h2>Commands</h2>
+        <p class="section-desc">Simple, intuitive package management for the hybrid age.</p>
+        <div class="terminal-wrap">
+            <div class="terminal-head">
+                <span class="terminal-dot"></span>
+                <span class="terminal-dot"></span>
+                <span class="terminal-dot"></span>
+                <span class="terminal-title">~/omnom — fish</span>
+            </div>
+            <div class="terminal-body">
+                <div><span class="prompt">❯</span> <span class="cmd">omnom-install firefox</span></div>
+                <div><span class="output">✓ firefox 118.0.2 installed</span></div>
+                <div><span class="prompt">❯</span> <span class="cmd">omnom-upgrade --all</span></div>
+                <div><span class="output">✓ 12 packages upgraded</span></div>
+                <div><span class="prompt">❯</span> <span class="cmd">omnom-remove discord</span></div>
+                <div><span class="output">✓ discord removed</span></div>
+                <div><span class="prompt">❯</span> <span class="cmd">omnom-rollback 12</span></div>
+                <div><span class="output">✓ rolled back to generation 12</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="roadmap" class="hidden">
+        <span class="section-label">✦ progress</span>
+        <h2>Roadmap</h2>
+        <p class="section-desc">The journey to 1.0 — every step is a milestone.</p>
+        <div class="timeline">
+            <div class="timeline-item done"><span class="status">✔</span> Website</div>
+            <div class="timeline-item done"><span class="status">✔</span> Bootstrap</div>
+            <div class="timeline-item done"><span class="status">✔</span> LFS</div>
+            <div class="timeline-item active"><span class="status">◉</span> Toolchain</div>
+            <div class="timeline-item"><span class="status">○</span> Kernel</div>
+            <div class="timeline-item"><span class="status">○</span> OpenRC</div>
+            <div class="timeline-item"><span class="status">○</span> Installer</div>
+            <div class="timeline-item"><span class="status">○</span> ISO</div>
+            <div class="timeline-item"><span class="status">○</span> Version 1.0</div>
+        </div>
+    </section>
+
+    <section id="requirements" class="hidden">
+        <span class="section-label">✦ docs</span>
+        <h2>Requirements &amp; Documentation</h2>
+        <p class="section-desc">Everything you need to know about Omnom Linux — from hardware specs to package management.</p>
+        <div class="terminal-wrap">
+            <div class="terminal-head">
+                <span class="terminal-dot"></span>
+                <span class="terminal-dot"></span>
+                <span class="terminal-dot"></span>
+                <span class="terminal-title">~/omnom — docs</span>
+            </div>
+            <div class="terminal-body">
+                <h3>Minimum Hardware</h3>
+                <ul>
+                    <li><strong>CPU:</strong> x86_64 or ARM64, 1 GHz or faster</li>
+                    <li><strong>RAM:</strong> 512 MB minimum (2 GB recommended)</li>
+                    <li><strong>Storage:</strong> 16 GB minimum (32 GB recommended)</li>
+                    <li><strong>Graphics:</strong> GPU with Wayland support (for Hyprland/Niri and kitty/alacritty)</li>
+                </ul>
+
+                <h4>Build Dependencies</h4>
+                <ul>
+                    <li>Compiler: GCC 12+ or Clang 15+</li>
+                    <li>Make: GNU Make 4.0+</li>
+                    <li>Python: 3.10+ (for build scripts)</li>
+                    <li>Git: 2.30+ (for source fetching)</li>
+                    <li>CMake: 3.20+ (for some packages)</li>
+                    <li>Meson: 1.0+ (for some packages)</li>
+                    <li>Ninja: 1.10+ (for fast builds)</li>
+                </ul>
+
+                <h4>Runtime Dependencies</h4>
+                <ul>
+                    <li>Kernel: Linux 6.0+ (with Wayland support)</li>
+                    <li>libc: glibc 2.35+ or musl 1.2+</li>
+                    <li>OpenRC: 0.45+ (init system)</li>
+                    <li>Wayland: 1.22+ (display server)</li>
+                    <li>Hyprland: 0.35+ or Niri 0.1+</li>
+                    <li>Kitty: 0.30+ (terminal)</li>
+                    <li>Fish: 3.6+ (shell)</li>
+                </ul>
+
+                <h4>Package Manager Backends (Optional)</h4>
+                <ul>
+                    <li>DNF: 4.10+ (for RPM packages)</li>
+                    <li>Pacman: 6.0+ (for Arch packages)</li>
+                    <li>APT: 2.4+ (for Debian packages)</li>
+                    <li>Portage: 3.0+ (for Gentoo emerge)</li>
+                    <li>Yay/Paru: (for AUR support)</li>
+                </ul>
+
+                <h4>Network</h4>
+                <ul>
+                    <li>Internet connection for package downloads</li>
+                    <li>Minimum 1 Mbps recommended</li>
+                    <li>Access to OUR repository (https://our.omnomlinux.org)</li>
+                </ul>
+
+                <h4>Build Space</h4>
+                <ul>
+                    <li>/tmp: 2 GB minimum (for source compilation)</li>
+                    <li>/var/lib/omnom: 1 GB minimum (for generations)</li>
+                    <li>~/.cache/omnom: 1 GB minimum (for build cache)</li>
+                </ul>
+
+                <h4>Supported Architectures</h4>
+                <ul>
+                    <li>Primary: x86_64</li>
+                    <li>Secondary: ARM64 (aarch64)</li>
+                    <li>Experimental: RISC-V</li>
+                </ul>
+
+                <h4>Display Requirements</h4>
+                <ul>
+                    <li>Resolution: 1024x768 minimum</li>
+                    <li>Color Depth: 24-bit (true color)</li>
+                    <li>GPU: Vulkan support recommended (for Hyprland)</li>
+                    <li>DRM: Kernel Mode Setting (KMS) support</li>
+                </ul>
+
+                <h3>Description</h3>
+                <p>A minimalist, source-based Linux distribution built from scratch with modern sensibilities.</p>
+
+                <h4>Default Settings</h4>
+                <ul>
+                    <li><strong>Base:</strong> Linux From Scratch (LFS) - custom built from source</li>
+                    <li><strong>Init System:</strong> OpenRC - lightweight and fast</li>
+                    <li><strong>Desktop Environment:</strong> Hyprland or Niri</li>
+                    <li><strong>Default Shell:</strong> Fish - user-friendly with autosuggestions</li>
+                    <li><strong>Default Terminal:</strong> Kitty - GPU-accelerated terminal emulator</li>
+                    <li><strong>Package Management:</strong> NixOS-style generations with rollback support</li>
+                    <li><strong>Resource Usage:</strong> Optimized for low RAM consumption</li>
+                </ul>
+
+                <h3>Package Management Commands</h3>
+                <h4>omnom-install - Intelligent Package Installer</h4>
+                <p>Automatically detects and uses the best available package manager with fallback options:</p>
+                <p><strong>Installation Priority Order:</strong> DNF (RPM-based) → Pacman (Arch-based) → AUR (Arch User Repository) → OUR (Omnom User Repository) → Source compilation (Gentoo-style emerge)</p>
+                <pre>
+omnom-install firefox                    # Auto-detect best method
+omnom-install firefox --emerge          # Force compile from source (Gentoo style)
+omnom-install firefox --our             # Install from Omnom User Repository
+omnom-install firefox --dnf             # Force use DNF
+omnom-install firefox --pacman          # Force use Pacman
+omnom-install firefox --aur             # Force install from AUR
+omnom-install --our                     # Browse/search OUR repository
+omnom-install --list                    # List all installed packages
+omnom-install --search &lt;term&gt;           # Search across all repositories
+omnom-install --remove &lt;package&gt;        # Remove installed package
+                </pre>
+
+                <h4>omnom-upgrade - System Updater</h4>
+                <p>Intelligent system update tool with rollback capabilities:</p>
+                <pre>
+omnom-upgrade --all                     # Update everything (system + packages)
+omnom-upgrade firefox                   # Update specific package only
+omnom-upgrade our                       # Update Omnom User Repository
+omnom-upgrade --check                   # Check for available updates without installing
+omnom-upgrade --rollback                # Rollback to previous generation
+omnom-upgrade --list-generations        # List all system generations
+omnom-upgrade --switch &lt;generation&gt;     # Switch to specific generation
+                </pre>
+
+                <h3>Key Features</h3>
+                <ol>
+                    <li><strong>NixOS-Style Generations:</strong> Every install/upgrade creates a new system generation. Easy rollback to any previous state. Keep up to 10 generations by default (configurable).</li>
+                    <li><strong>Multi-Backend Support:</strong> Seamlessly works with DNF, Pacman, APT, Emerge. Unified interface across different package managers. Automatic fallback if primary method fails.</li>
+                    <li><strong>Omnom User Repository (OUR):</strong> Community-driven package repository. Easy package submission. Simple .pkg format for package definitions. Local package creation support.</li>
+                    <li><strong>Source Compilation:</strong> Gentoo-style emerge support. Automatic dependency resolution. Optimized for the specific hardware. Custom compiler flags support.</li>
+                    <li><strong>Low Resource Usage:</strong> Minimal memory footprint. No unnecessary background services. Efficient package management. Optimized for older hardware.</li>
+                </ol>
+
+                <h3>File Structure</h3>
+                <pre>
+/etc/omnom/
+├── omnom.conf          # Main configuration
+├── repos.conf          # Repository configuration
+└── flags.conf          # Default compiler flags
+
+/var/lib/omnom/
+├── generations/        # All system generations
+│   ├── gen-20240315_120000/
+│   ├── gen-20240315_150000/
+│   └── current -> gen-20240315_150000/
+├── packages.list      # Currently installed packages
+└── history.log        # Installation/upgrade history
+
+~/.config/omnom/
+├── our-repo/          # Local OUR packages
+└── omnomrc           # User configuration
+
+~/.cache/omnom/
+└── builds/           # Temporary build files
+                </pre>
+
+                <h3>Configuration Options</h3>
+                <pre>
+<span class="comment"># /etc/omnom/omnom.conf</span>
+
+<span class="comment">### Default installation method (auto/dnf/pacman/emerge/our)</span>
+<span class="key">DEFAULT_METHOD</span>=<span class="value">"auto"</span>
+
+<span class="comment">### Keep generations count</span>
+<span class="key">GENERATIONS_KEEP</span>=<span class="value">10</span>
+
+<span class="comment">### Compiler flags for source compilation</span>
+<span class="key">CFLAGS</span>=<span class="value">"-O2 -march=native -pipe"</span>
+<span class="key">MAKEOPTS</span>=<span class="value">"-j$(nproc)"</span>
+
+<span class="comment">### Repository settings</span>
+<span class="key">OUR_REPO_ENABLED</span>=<span class="value">true</span>
+<span class="key">OUR_REPO_URL</span>=<span class="value">"https://frosr1o2.github.io/OmnomOS-Omnom-linux"</span>
+
+<span class="comment">### Auto-cleanup</span>
+<span class="key">AUTO_CLEANUP</span>=<span class="value">true</span>
+                </pre>
+
+                <h3>Example Workflows</h3>
+                <h4>Installing Firefox</h4>
+                <pre>
+omnom-install firefox
+omnom-install firefox --emerge
+omnom-install firefox --our
+                </pre>
+                <h4>Updating System</h4>
+                <pre>
+omnom-upgrade --all
+omnom-upgrade --check
+omnom-upgrade --rollback
+                </pre>
+                <h4>Managing Packages</h4>
+                <pre>
+omnom-install --list
+omnom-install --search browser
+omnom-remove firefox
+                </pre>
+
+                <h3>Benefits Over Traditional Distros</h3>
+                <ul>
+                    <li><strong>Flexibility:</strong> Mix and match package managers</li>
+                    <li><strong>Safety:</strong> Automatic generations = easy rollback</li>
+                    <li><strong>Control:</strong> Choose between binary or source compilation</li>
+                    <li><strong>Simplicity:</strong> Single command for all package operations</li>
+                    <li><strong>Efficiency:</strong> Low RAM usage optimized</li>
+                    <li><strong>Modern:</strong> Wayland + Hyprland for smooth desktop experience</li>
+                </ul>
+
+                <h3>Future Roadmap</h3>
+                <ul>
+                    <li>GUI package manager frontend</li>
+                    <li>First beta test iso release</li>
+                    <li>Flatpak/AppImage integration</li>
+                    <li>Container-based package isolation</li>
+                    <li>Distributed package compilation</li>
+                    <li>Automated performance benchmarking</li>
+                    <li>Package dependency visualization</li>
+                    <li>Binary cache for compiled packages</li>
+                </ul>
+
+                <div class="note">
+                    <strong>Ever wanted your system has gentoo, nix, fedora, arch things? so this is what you want!</strong>
+                </div>
+
+                <h3>When you got iso file?</h3>
+                <p>
+                    I'm Trying work hard but i don't have so much time to this project so i'm thinking release date is 2027 year or 2026 ~9 November yes sorry but i'm do it alone.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#home" data-nav>Home</a>
+            <a href="#features" data-nav>Features</a>
+            <a href="#roadmap" data-nav>Roadmap</a>
+            <a href="https://github.com/Frosr1o2/OmnomOS-Omnom-linux" target="_blank">GitHub</a>
+        </div>
+        <p>Omnom Linux © 2026</p>
+    </footer>
+
+    <button id="topButton" aria-label="Back to top">↑</button>
+
+    <script>
+        (function() {
+            'use strict';
+            const bg = document.getElementById('background');
+            for (let i = 0; i < 45; i++) {
+                const p = document.createElement('span');
+                p.className = 'particle';
+                const size = 2 + Math.random() * 5;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = (Math.random() * 100 + 20) + '%';
+                p.style.animationDuration = (14 + Math.random() * 22) + 's';
+                p.style.animationDelay = (Math.random() * 8) + 's';
+                p.style.opacity = 0.2 + Math.random() * 0.4;
+                bg.appendChild(p);
+            }
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 40);
+            });
+            const toggle = document.getElementById('menuToggle');
+            const nav = document.getElementById('nav');
+            toggle.addEventListener('click', () => {
+                toggle.classList.toggle('open');
+                nav.classList.toggle('open');
+            });
+            nav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    toggle.classList.remove('open');
+                    nav.classList.remove('open');
+                });
+            });
+            document.querySelectorAll('[data-nav]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const target = document.getElementById(targetId);
+                        if (target) {
+                            const headerHeight = document.getElementById('header').offsetHeight;
+                            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                            window.scrollTo({
+                                top: targetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+            document.querySelectorAll('.hidden').forEach(el => observer.observe(el));
+            const topBtn = document.getElementById('topButton');
+            window.addEventListener('scroll', () => {
+                topBtn.classList.toggle('visible', window.scrollY > 500);
+            });
+            topBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.background =
+                        `radial-gradient(circle at ${x}px ${y}px, rgba(0,184,148,.12), rgba(255,255,255,.02))`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.background = 'rgba(255,255,255,.05)';
+                });
+            });
+            const planet = document.querySelector('.planet');
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 8;
+                const y = (e.clientY / window.innerHeight - 0.5) * 8;
+                planet.style.transform =
+                    `rotate(${parseInt(planet.style.transform?.match(/rotate\(([^)]+)\)/)?.[1] || 0)}deg) translate(${x}px, ${y}px)`;
+            });
+        })();
+    </script>
 </body>
-
 </html>
