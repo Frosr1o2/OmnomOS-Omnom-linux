@@ -6,8 +6,6 @@
     <title>Omnom Linux</title>
     <meta name="description" content="Hybrid Linux Distribution built from Linux From Scratch" />
     <link rel="icon" href="favicon.png" type="image/png">
-
-    <!-- Open Graph для Discord / соцсетей -->
     <meta property="og:title" content="Omnom Linux" />
     <meta property="og:description" content="Omnom Linux – modern hybrid Linux distribution built from LFS. OpenRC, Hyprland, rollback-ready." />
     <meta property="og:image" content="https://frosr1o2.github.io/OmnomOS-Omnom-linux/favicon.png" />
@@ -277,22 +275,21 @@
             width: 440px;
             height: 440px;
         }
-        /* Большой круг – теперь использует иконку */
         .planet {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             background-image: url('favicon.png');
+            background-color: #060b09;
             background-size: cover;
             background-position: center;
             box-shadow:
-                0 0 80px rgba(0, 184, 148, .35),
-                0 0 200px rgba(0, 184, 148, .12),
+                0 0 60px rgba(0, 184, 148, .35),
+                0 0 120px rgba(0, 184, 148, .15),
                 inset 0 -40px 80px rgba(0, 0, 0, .2);
             animation: planetSpin 22s linear infinite, planetFloat 4s ease-in-out infinite;
             position: relative;
         }
-        /* Убираем лишний псевдоэлемент, чтобы не перекрывал картинку */
         .planet::after {
             display: none;
         }
