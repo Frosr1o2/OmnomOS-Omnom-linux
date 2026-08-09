@@ -1,5 +1,6 @@
 # Omnom Linux Minimal Requirements
 ## Minimum Hardware
+###### This can be change in any version!
 
     CPU: x86_64 or ARM64, 1 GHz or faster
 
@@ -8,7 +9,7 @@
     Storage: 16 GB minimum (32 GB recommended)
 
     Graphics: GPU with Wayland support (for Hyprland/Niri and kitty/alacritty)
-    #### This can be change in any version!
+    
 
 ### Build Dependencies
 
