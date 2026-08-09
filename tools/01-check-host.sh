@@ -28,7 +28,6 @@ check_version() {
     echo "[OK] ${tool}: ${current_ver} (min required: ${min_ver})"
 }
 
-# 1. Shell Check
 sh_target=$(readlink -f /bin/sh)
 if [[ "${sh_target}" != *bash* ]]; then
     echo "[ERROR] /bin/sh points to ${sh_target}. It MUST point to bash."
@@ -37,7 +36,6 @@ else
     echo "[OK] /bin/sh points to bash (${sh_target})"
 fi
 
-# 2. Tool Version Checks
 check_version "Bash" "5.1" "$(bash --version | head -n1 | cut -d" " -f4)"
 check_version "Binutils" "2.38" "$(ld --version | head -n1 | awk '{print $NF}')"
 check_version "Bison" "3.8" "$(bison --version | head -n1 | awk '{print $NF}')"
@@ -59,7 +57,6 @@ check_version "Sed" "4.8" "$(sed --version | head -n1 | awk '{print $4}')"
 check_version "Tar" "1.34" "$(tar --version | head -n1 | awk '{print $4}')"
 check_version "Xz" "5.2" "$(xz --version | head -n1 | awk '{print $4}')"
 
-# 3. Kernel & Architecture Check
 arch=$(uname -m)
 if [ "${arch}" != "x86_64" ]; then
     echo "[ERROR] Target architecture x86_64 required, found: ${arch}"
