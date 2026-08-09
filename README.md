@@ -8,6 +8,7 @@
     Storage: 16 GB minimum (32 GB recommended)
 
     Graphics: GPU with Wayland support (for Hyprland/Niri and kitty/alacritty)
+    #### This can be change in any version!
 
 ### Build Dependencies
 
