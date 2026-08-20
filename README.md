@@ -61,7 +61,8 @@
 
     Minimum 1 Mbps recommended
 
-    Access to OUR repository (https://our.omnomlinux.org)
+    Access to OUR repository (https://frosr1o2.github.io/OmnomOS-Omnom-linux)
+    > This link changes some times
 
 ### Build Space
 
