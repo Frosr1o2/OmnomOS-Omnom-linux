@@ -990,16 +990,17 @@
                 <p>Automatically detects and uses the best available package manager with fallback options:</p>
                 <p><strong>Installation Priority Order:</strong> DNF (RPM-based) → Pacman (Arch-based) → AUR (Arch User Repository) → OUR (Omnom User Repository) → Source compilation (Gentoo-style emerge)</p>
                 <pre>
-omnom-install firefox                    # Auto-detect best method
+omnom-install firefox                   # Auto-detect best method
 omnom-install firefox --emerge          # Force compile from source (Gentoo style)
 omnom-install firefox --our             # Install from Omnom User Repository
 omnom-install firefox --dnf             # Force use DNF
 omnom-install firefox --pacman          # Force use Pacman
 omnom-install firefox --aur             # Force install from AUR
+omnom-install --aur                     # Browse/search AUR repository
 omnom-install --our                     # Browse/search OUR repository
 omnom-install --list                    # List all installed packages
-omnom-install --search &lt;term&gt;           # Search across all repositories
-omnom-install --remove &lt;package&gt;        # Remove installed package
+omnom-install --search &lt;term&gt;     # Search across all repositories
+omnom-remove &lt;package&gt;            # Remove installed package
                 </pre>
 
                 <h4>omnom-upgrade - System Updater</h4>
@@ -1039,7 +1040,7 @@ omnom-upgrade --switch &lt;generation&gt;     # Switch to specific generation
 └── history.log        # Installation/upgrade history
 
 ~/.config/omnom/
-├── our-repo/          # Local OUR packages
+├── our-repo/         # Local OUR packages
 └── omnomrc           # User configuration
 
 ~/.cache/omnom/
