@@ -132,16 +132,17 @@ Installation Priority Order:
 
 Usage Examples:
 
-omnom-install firefox                    # Auto-detect best method
+omnom-install firefox                   # Auto-detect best method
 omnom-install firefox --emerge          # Force compile from source (Gentoo style)
 omnom-install firefox --our             # Install from Omnom User Repository
 omnom-install firefox --dnf             # Force use DNF
 omnom-install firefox --pacman          # Force use Pacman
 omnom-install firefox --aur             # Force install from AUR
+omnom-install --aur                     # Browse/search AUR repository
 omnom-install --our                     # Browse/search OUR repository
 omnom-install --list                    # List all installed packages
 omnom-install --search <term>           # Search across all repositories
-omnom-install --remove <package>        # Remove installed package
+omnom-remove <package>                  # Remove installed package
 
 omnom-upgrade - System Updater
 
