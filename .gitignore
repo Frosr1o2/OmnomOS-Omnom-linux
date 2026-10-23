@@ -1,0 +1,37 @@
+# Build trees
+/build/
+/out/
+/work/
+/iso/work/
+/iso/out/
+
+# LFS source archives and download manifests (fetched by tools/03-fetch-sources.sh)
+omnom-core/lfs/sources/
+sources/
+*.tar.gz
+*.tar.xz
+*.tar.bz2
+*.tar.zst
+wget-list
+wget-list-sysv
+md5sums
+!omnom-core/lfs/packages.d/*.tar.*
+
+# Package manager build outputs
+omnom-scripts/package-manager/omnom-pkg
+omnom-scripts/package-manager/src/*.o
+
+# LFS build engine work tree (when built inside the repository)
+omnom-core/lfs/build/
+
+# Runtime state of the package manager
+generations/
+build-logs/
+
+# Editors and OS noise
+.editorconfig.local
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store

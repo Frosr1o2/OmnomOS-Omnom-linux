@@ -1,14 +1,19 @@
 #!/bin/sh
+# Thin launcher for the omnom-pkg binary (upgrade subcommand).
+# The real implementation is the C++ source in src/.
+set -eu
 
-if [ "$1" = "--all" ]; then
+self=$(readlink -f "$0" 2>/dev/null || echo "$0")
+dir=$(CDPATH= cd -- "$(dirname -- "$self")" && pwd)
 
-echo "Updating all packages"
+for candidate in "${OMNOM_PKG_BIN:-}" \
+                 "$dir/omnom-pkg" \
+                 "$dir/../libexec/omnom/omnom-pkg" \
+                 "/usr/libexec/omnom/omnom-pkg"; do
+    if [ -n "$candidate" ] && [ -x "$candidate" ]; then
+        exec "$candidate" upgrade "$@"
+    fi
+done
 
-pacman -Syu --noconfirm
-
-else
-
-pacman -S "$1" --noconfirm
-
-fi
-
+echo "omnom-upgrade: omnom-pkg binary not found (run 'make' in omnom-scripts/package-manager)" >&2
+exit 127

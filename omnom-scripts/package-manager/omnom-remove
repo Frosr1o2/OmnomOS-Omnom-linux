@@ -1,0 +1,19 @@
+#!/bin/sh
+# Thin launcher for the omnom-pkg binary (remove subcommand).
+# The real implementation is the C++ source in src/.
+set -eu
+
+self=$(readlink -f "$0" 2>/dev/null || echo "$0")
+dir=$(CDPATH= cd -- "$(dirname -- "$self")" && pwd)
+
+for candidate in "${OMNOM_PKG_BIN:-}" \
+                 "$dir/omnom-pkg" \
+                 "$dir/../libexec/omnom/omnom-pkg" \
+                 "/usr/libexec/omnom/omnom-pkg"; do
+    if [ -n "$candidate" ] && [ -x "$candidate" ]; then
+        exec "$candidate" remove "$@"
+    fi
+done
+
+echo "omnom-remove: omnom-pkg binary not found (run 'make' in omnom-scripts/package-manager)" >&2
+exit 127
