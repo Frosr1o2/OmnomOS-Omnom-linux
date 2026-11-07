@@ -1,3 +1,6 @@
+![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active%20Development-orange?style=for-the-badge)
+
 # Omnom Linux
 
 A small, source-based Linux distribution derived from **Linux From Scratch
